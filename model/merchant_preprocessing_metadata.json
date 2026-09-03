@@ -1,0 +1,38 @@
+{
+  "model": "merchant_logistic_regression",
+  "features": [
+    "transaction_amount",
+    "merchant_transaction_count_before",
+    "merchant_avg_amount_before",
+    "merchant_previous_amount",
+    "merchant_unique_customers_before",
+    "merchant_unique_ips_before",
+    "merchant_unique_devices_before",
+    "merchant_transactions_last_24h",
+    "seconds_since_merchant_previous",
+    "ip_unique_merchants_before",
+    "ip_unique_customers_before",
+    "merchant_fraud_count_before",
+    "merchant_fraud_rate_before",
+    "is_new_merchant",
+    "merchant_history_available",
+    "amount_deviation_ratio",
+    "high_amount_deviation",
+    "high_velocity",
+    "merchant_high_historical_fraud"
+  ],
+  "target": "is_fraud",
+  "imputation": "median",
+  "split": {
+    "train_rows": 192000,
+    "validation_rows": 48000,
+    "final_test_rows": 60000,
+    "method": "chronological"
+  },
+  "threshold_selection": {
+    "fn_cost": 10,
+    "fp_cost": 1,
+    "threshold": 0.27,
+    "selection_set": "validation"
+  }
+}

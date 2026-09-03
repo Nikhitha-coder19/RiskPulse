@@ -1,0 +1,196 @@
+{
+  "model": "merchant_logistic_regression",
+  "test_rows": 60000,
+  "fraud_rate": 0.0705,
+  "roc_auc": 0.8692681949801424,
+  "thresholds": [
+    {
+      "threshold": 0.1,
+      "precision": 0.0755,
+      "recall": 0.9858,
+      "f1": 0.1403,
+      "tp": 4170,
+      "fp": 51041,
+      "tn": 4729,
+      "fn": 60,
+      "fpr": 0.915205
+    },
+    {
+      "threshold": 0.15,
+      "precision": 0.1045,
+      "recall": 0.9421,
+      "f1": 0.1882,
+      "tp": 3985,
+      "fp": 34141,
+      "tn": 21629,
+      "fn": 245,
+      "fpr": 0.612175
+    },
+    {
+      "threshold": 0.2,
+      "precision": 0.1895,
+      "recall": 0.8742,
+      "f1": 0.3115,
+      "tp": 3698,
+      "fp": 15818,
+      "tn": 39952,
+      "fn": 532,
+      "fpr": 0.283629
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.272,
+      "recall": 0.8288,
+      "f1": 0.4096,
+      "tp": 3506,
+      "fp": 9385,
+      "tn": 46385,
+      "fn": 724,
+      "fpr": 0.16828
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.3027,
+      "recall": 0.8139,
+      "f1": 0.4413,
+      "tp": 3443,
+      "fp": 7932,
+      "tn": 47838,
+      "fn": 787,
+      "fpr": 0.142227
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.3117,
+      "recall": 0.8099,
+      "f1": 0.4501,
+      "tp": 3426,
+      "fp": 7567,
+      "tn": 48203,
+      "fn": 804,
+      "fpr": 0.135682
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.3141,
+      "recall": 0.8073,
+      "f1": 0.4522,
+      "tp": 3415,
+      "fp": 7459,
+      "tn": 48311,
+      "fn": 815,
+      "fpr": 0.133746
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.3146,
+      "recall": 0.8061,
+      "f1": 0.4526,
+      "tp": 3410,
+      "fp": 7428,
+      "tn": 48342,
+      "fn": 820,
+      "fpr": 0.13319
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.3153,
+      "recall": 0.8061,
+      "f1": 0.4533,
+      "tp": 3410,
+      "fp": 7405,
+      "tn": 48365,
+      "fn": 820,
+      "fpr": 0.132777
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.3155,
+      "recall": 0.8061,
+      "f1": 0.4535,
+      "tp": 3410,
+      "fp": 7399,
+      "tn": 48371,
+      "fn": 820,
+      "fpr": 0.13267
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.3155,
+      "recall": 0.8054,
+      "f1": 0.4534,
+      "tp": 3407,
+      "fp": 7392,
+      "tn": 48378,
+      "fn": 823,
+      "fpr": 0.132544
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.3159,
+      "recall": 0.8045,
+      "f1": 0.4537,
+      "tp": 3403,
+      "fp": 7368,
+      "tn": 48402,
+      "fn": 827,
+      "fpr": 0.132114
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.3179,
+      "recall": 0.7986,
+      "f1": 0.4548,
+      "tp": 3378,
+      "fp": 7248,
+      "tn": 48522,
+      "fn": 852,
+      "fpr": 0.129962
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.3262,
+      "recall": 0.7716,
+      "f1": 0.4585,
+      "tp": 3264,
+      "fp": 6743,
+      "tn": 49027,
+      "fn": 966,
+      "fpr": 0.120907
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.3436,
+      "recall": 0.6851,
+      "f1": 0.4577,
+      "tp": 2898,
+      "fp": 5535,
+      "tn": 50235,
+      "fn": 1332,
+      "fpr": 0.099247
+    },
+    {
+      "threshold": 0.85,
+      "precision": 0.3734,
+      "recall": 0.5825,
+      "f1": 0.4551,
+      "tp": 2464,
+      "fp": 4134,
+      "tn": 51636,
+      "fn": 1766,
+      "fpr": 0.074126
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.4042,
+      "recall": 0.4622,
+      "f1": 0.4312,
+      "tp": 1955,
+      "fp": 2882,
+      "tn": 52888,
+      "fn": 2275,
+      "fpr": 0.051677
+    }
+  ],
+  "note": "Thresholds are evaluated on the chronological held-out test set. Use validation data for final threshold selection if available; these results are primarily for comparison."
+}

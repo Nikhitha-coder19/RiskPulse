@@ -1,0 +1,3312 @@
+{
+  "model": "merchant_logistic_regression",
+  "test_rows": 60000,
+  "fraud_rate": 0.0705,
+  "cost_definition": {
+    "FN": "Fraudulent/risky activity incorrectly allowed through, representing potential fraud, chargeback, return, investigation or remediation exposure.",
+    "FP": "Legitimate activity incorrectly flagged, representing potential lost conversion, merchant revenue opportunity and customer friction."
+  },
+  "important_note": "Cost values are relative sensitivity-analysis weights, not claimed real-world monetary losses.",
+  "results": {
+    "1_to_1": {
+      "fn_cost": 1,
+      "fp_cost": 1,
+      "best_threshold": 0.9,
+      "best_total_cost": 5157,
+      "best_fp": 2882,
+      "best_fn": 2275,
+      "best_tp": 1955,
+      "best_tn": 52888,
+      "thresholds": [
+        {
+          "threshold": 0.1,
+          "tp": 4170,
+          "fp": 51041,
+          "tn": 4729,
+          "fn": 60,
+          "total_cost": 51101
+        },
+        {
+          "threshold": 0.11,
+          "tp": 4147,
+          "fp": 48753,
+          "tn": 7017,
+          "fn": 83,
+          "total_cost": 48836
+        },
+        {
+          "threshold": 0.12,
+          "tp": 4126,
+          "fp": 45815,
+          "tn": 9955,
+          "fn": 104,
+          "total_cost": 45919
+        },
+        {
+          "threshold": 0.13,
+          "tp": 4080,
+          "fp": 42315,
+          "tn": 13455,
+          "fn": 150,
+          "total_cost": 42465
+        },
+        {
+          "threshold": 0.14,
+          "tp": 4038,
+          "fp": 38432,
+          "tn": 17338,
+          "fn": 192,
+          "total_cost": 38624
+        },
+        {
+          "threshold": 0.15,
+          "tp": 3985,
+          "fp": 34141,
+          "tn": 21629,
+          "fn": 245,
+          "total_cost": 34386
+        },
+        {
+          "threshold": 0.16,
+          "tp": 3928,
+          "fp": 29851,
+          "tn": 25919,
+          "fn": 302,
+          "total_cost": 30153
+        },
+        {
+          "threshold": 0.17,
+          "tp": 3862,
+          "fp": 25705,
+          "tn": 30065,
+          "fn": 368,
+          "total_cost": 26073
+        },
+        {
+          "threshold": 0.18,
+          "tp": 3803,
+          "fp": 21888,
+          "tn": 33882,
+          "fn": 427,
+          "total_cost": 22315
+        },
+        {
+          "threshold": 0.19,
+          "tp": 3741,
+          "fp": 18569,
+          "tn": 37201,
+          "fn": 489,
+          "total_cost": 19058
+        },
+        {
+          "threshold": 0.2,
+          "tp": 3698,
+          "fp": 15818,
+          "tn": 39952,
+          "fn": 532,
+          "total_cost": 16350
+        },
+        {
+          "threshold": 0.21,
+          "tp": 3645,
+          "fp": 13674,
+          "tn": 42096,
+          "fn": 585,
+          "total_cost": 14259
+        },
+        {
+          "threshold": 0.22,
+          "tp": 3594,
+          "fp": 12109,
+          "tn": 43661,
+          "fn": 636,
+          "total_cost": 12745
+        },
+        {
+          "threshold": 0.23,
+          "tp": 3568,
+          "fp": 10927,
+          "tn": 44843,
+          "fn": 662,
+          "total_cost": 11589
+        },
+        {
+          "threshold": 0.24,
+          "tp": 3536,
+          "fp": 10006,
+          "tn": 45764,
+          "fn": 694,
+          "total_cost": 10700
+        },
+        {
+          "threshold": 0.25,
+          "tp": 3506,
+          "fp": 9385,
+          "tn": 46385,
+          "fn": 724,
+          "total_cost": 10109
+        },
+        {
+          "threshold": 0.26,
+          "tp": 3492,
+          "fp": 8928,
+          "tn": 46842,
+          "fn": 738,
+          "total_cost": 9666
+        },
+        {
+          "threshold": 0.27,
+          "tp": 3476,
+          "fp": 8528,
+          "tn": 47242,
+          "fn": 754,
+          "total_cost": 9282
+        },
+        {
+          "threshold": 0.28,
+          "tp": 3459,
+          "fp": 8267,
+          "tn": 47503,
+          "fn": 771,
+          "total_cost": 9038
+        },
+        {
+          "threshold": 0.29,
+          "tp": 3450,
+          "fp": 8073,
+          "tn": 47697,
+          "fn": 780,
+          "total_cost": 8853
+        },
+        {
+          "threshold": 0.3,
+          "tp": 3443,
+          "fp": 7932,
+          "tn": 47838,
+          "fn": 787,
+          "total_cost": 8719
+        },
+        {
+          "threshold": 0.31,
+          "tp": 3438,
+          "fp": 7821,
+          "tn": 47949,
+          "fn": 792,
+          "total_cost": 8613
+        },
+        {
+          "threshold": 0.32,
+          "tp": 3433,
+          "fp": 7745,
+          "tn": 48025,
+          "fn": 797,
+          "total_cost": 8542
+        },
+        {
+          "threshold": 0.33,
+          "tp": 3430,
+          "fp": 7669,
+          "tn": 48101,
+          "fn": 800,
+          "total_cost": 8469
+        },
+        {
+          "threshold": 0.34,
+          "tp": 3428,
+          "fp": 7613,
+          "tn": 48157,
+          "fn": 802,
+          "total_cost": 8415
+        },
+        {
+          "threshold": 0.35,
+          "tp": 3426,
+          "fp": 7567,
+          "tn": 48203,
+          "fn": 804,
+          "total_cost": 8371
+        },
+        {
+          "threshold": 0.36,
+          "tp": 3423,
+          "fp": 7536,
+          "tn": 48234,
+          "fn": 807,
+          "total_cost": 8343
+        },
+        {
+          "threshold": 0.37,
+          "tp": 3422,
+          "fp": 7516,
+          "tn": 48254,
+          "fn": 808,
+          "total_cost": 8324
+        },
+        {
+          "threshold": 0.38,
+          "tp": 3421,
+          "fp": 7494,
+          "tn": 48276,
+          "fn": 809,
+          "total_cost": 8303
+        },
+        {
+          "threshold": 0.39,
+          "tp": 3417,
+          "fp": 7472,
+          "tn": 48298,
+          "fn": 813,
+          "total_cost": 8285
+        },
+        {
+          "threshold": 0.4,
+          "tp": 3415,
+          "fp": 7459,
+          "tn": 48311,
+          "fn": 815,
+          "total_cost": 8274
+        },
+        {
+          "threshold": 0.41,
+          "tp": 3412,
+          "fp": 7452,
+          "tn": 48318,
+          "fn": 818,
+          "total_cost": 8270
+        },
+        {
+          "threshold": 0.42,
+          "tp": 3412,
+          "fp": 7446,
+          "tn": 48324,
+          "fn": 818,
+          "total_cost": 8264
+        },
+        {
+          "threshold": 0.43,
+          "tp": 3412,
+          "fp": 7439,
+          "tn": 48331,
+          "fn": 818,
+          "total_cost": 8257
+        },
+        {
+          "threshold": 0.44,
+          "tp": 3411,
+          "fp": 7432,
+          "tn": 48338,
+          "fn": 819,
+          "total_cost": 8251
+        },
+        {
+          "threshold": 0.45,
+          "tp": 3410,
+          "fp": 7428,
+          "tn": 48342,
+          "fn": 820,
+          "total_cost": 8248
+        },
+        {
+          "threshold": 0.46,
+          "tp": 3410,
+          "fp": 7423,
+          "tn": 48347,
+          "fn": 820,
+          "total_cost": 8243
+        },
+        {
+          "threshold": 0.47,
+          "tp": 3410,
+          "fp": 7419,
+          "tn": 48351,
+          "fn": 820,
+          "total_cost": 8239
+        },
+        {
+          "threshold": 0.48,
+          "tp": 3410,
+          "fp": 7413,
+          "tn": 48357,
+          "fn": 820,
+          "total_cost": 8233
+        },
+        {
+          "threshold": 0.49,
+          "tp": 3410,
+          "fp": 7410,
+          "tn": 48360,
+          "fn": 820,
+          "total_cost": 8230
+        },
+        {
+          "threshold": 0.5,
+          "tp": 3410,
+          "fp": 7405,
+          "tn": 48365,
+          "fn": 820,
+          "total_cost": 8225
+        },
+        {
+          "threshold": 0.51,
+          "tp": 3410,
+          "fp": 7402,
+          "tn": 48368,
+          "fn": 820,
+          "total_cost": 8222
+        },
+        {
+          "threshold": 0.52,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 8220
+        },
+        {
+          "threshold": 0.53,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 8220
+        },
+        {
+          "threshold": 0.54,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 8219
+        },
+        {
+          "threshold": 0.55,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 8219
+        },
+        {
+          "threshold": 0.56,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 8219
+        },
+        {
+          "threshold": 0.57,
+          "tp": 3410,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 820,
+          "total_cost": 8217
+        },
+        {
+          "threshold": 0.58,
+          "tp": 3409,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 821,
+          "total_cost": 8218
+        },
+        {
+          "threshold": 0.59,
+          "tp": 3407,
+          "fp": 7396,
+          "tn": 48374,
+          "fn": 823,
+          "total_cost": 8219
+        },
+        {
+          "threshold": 0.6,
+          "tp": 3407,
+          "fp": 7392,
+          "tn": 48378,
+          "fn": 823,
+          "total_cost": 8215
+        },
+        {
+          "threshold": 0.61,
+          "tp": 3407,
+          "fp": 7391,
+          "tn": 48379,
+          "fn": 823,
+          "total_cost": 8214
+        },
+        {
+          "threshold": 0.62,
+          "tp": 3405,
+          "fp": 7388,
+          "tn": 48382,
+          "fn": 825,
+          "total_cost": 8213
+        },
+        {
+          "threshold": 0.63,
+          "tp": 3405,
+          "fp": 7383,
+          "tn": 48387,
+          "fn": 825,
+          "total_cost": 8208
+        },
+        {
+          "threshold": 0.64,
+          "tp": 3404,
+          "fp": 7376,
+          "tn": 48394,
+          "fn": 826,
+          "total_cost": 8202
+        },
+        {
+          "threshold": 0.65,
+          "tp": 3403,
+          "fp": 7368,
+          "tn": 48402,
+          "fn": 827,
+          "total_cost": 8195
+        },
+        {
+          "threshold": 0.66,
+          "tp": 3400,
+          "fp": 7357,
+          "tn": 48413,
+          "fn": 830,
+          "total_cost": 8187
+        },
+        {
+          "threshold": 0.67,
+          "tp": 3399,
+          "fp": 7338,
+          "tn": 48432,
+          "fn": 831,
+          "total_cost": 8169
+        },
+        {
+          "threshold": 0.68,
+          "tp": 3393,
+          "fp": 7318,
+          "tn": 48452,
+          "fn": 837,
+          "total_cost": 8155
+        },
+        {
+          "threshold": 0.69,
+          "tp": 3385,
+          "fp": 7288,
+          "tn": 48482,
+          "fn": 845,
+          "total_cost": 8133
+        },
+        {
+          "threshold": 0.7,
+          "tp": 3378,
+          "fp": 7248,
+          "tn": 48522,
+          "fn": 852,
+          "total_cost": 8100
+        },
+        {
+          "threshold": 0.71,
+          "tp": 3369,
+          "fp": 7194,
+          "tn": 48576,
+          "fn": 861,
+          "total_cost": 8055
+        },
+        {
+          "threshold": 0.72,
+          "tp": 3343,
+          "fp": 7133,
+          "tn": 48637,
+          "fn": 887,
+          "total_cost": 8020
+        },
+        {
+          "threshold": 0.73,
+          "tp": 3319,
+          "fp": 7029,
+          "tn": 48741,
+          "fn": 911,
+          "total_cost": 7940
+        },
+        {
+          "threshold": 0.74,
+          "tp": 3293,
+          "fp": 6896,
+          "tn": 48874,
+          "fn": 937,
+          "total_cost": 7833
+        },
+        {
+          "threshold": 0.75,
+          "tp": 3264,
+          "fp": 6743,
+          "tn": 49027,
+          "fn": 966,
+          "total_cost": 7709
+        },
+        {
+          "threshold": 0.76,
+          "tp": 3214,
+          "fp": 6568,
+          "tn": 49202,
+          "fn": 1016,
+          "total_cost": 7584
+        },
+        {
+          "threshold": 0.77,
+          "tp": 3147,
+          "fp": 6362,
+          "tn": 49408,
+          "fn": 1083,
+          "total_cost": 7445
+        },
+        {
+          "threshold": 0.78,
+          "tp": 3069,
+          "fp": 6118,
+          "tn": 49652,
+          "fn": 1161,
+          "total_cost": 7279
+        },
+        {
+          "threshold": 0.79,
+          "tp": 2994,
+          "fp": 5841,
+          "tn": 49929,
+          "fn": 1236,
+          "total_cost": 7077
+        },
+        {
+          "threshold": 0.8,
+          "tp": 2898,
+          "fp": 5535,
+          "tn": 50235,
+          "fn": 1332,
+          "total_cost": 6867
+        },
+        {
+          "threshold": 0.81,
+          "tp": 2802,
+          "fp": 5252,
+          "tn": 50518,
+          "fn": 1428,
+          "total_cost": 6680
+        },
+        {
+          "threshold": 0.82,
+          "tp": 2704,
+          "fp": 4968,
+          "tn": 50802,
+          "fn": 1526,
+          "total_cost": 6494
+        },
+        {
+          "threshold": 0.83,
+          "tp": 2624,
+          "fp": 4678,
+          "tn": 51092,
+          "fn": 1606,
+          "total_cost": 6284
+        },
+        {
+          "threshold": 0.84,
+          "tp": 2556,
+          "fp": 4416,
+          "tn": 51354,
+          "fn": 1674,
+          "total_cost": 6090
+        },
+        {
+          "threshold": 0.85,
+          "tp": 2464,
+          "fp": 4134,
+          "tn": 51636,
+          "fn": 1766,
+          "total_cost": 5900
+        },
+        {
+          "threshold": 0.86,
+          "tp": 2370,
+          "fp": 3895,
+          "tn": 51875,
+          "fn": 1860,
+          "total_cost": 5755
+        },
+        {
+          "threshold": 0.87,
+          "tp": 2295,
+          "fp": 3656,
+          "tn": 52114,
+          "fn": 1935,
+          "total_cost": 5591
+        },
+        {
+          "threshold": 0.88,
+          "tp": 2196,
+          "fp": 3391,
+          "tn": 52379,
+          "fn": 2034,
+          "total_cost": 5425
+        },
+        {
+          "threshold": 0.89,
+          "tp": 2087,
+          "fp": 3152,
+          "tn": 52618,
+          "fn": 2143,
+          "total_cost": 5295
+        },
+        {
+          "threshold": 0.9,
+          "tp": 1955,
+          "fp": 2882,
+          "tn": 52888,
+          "fn": 2275,
+          "total_cost": 5157
+        }
+      ]
+    },
+    "2_to_1": {
+      "fn_cost": 2,
+      "fp_cost": 1,
+      "best_threshold": 0.9,
+      "best_total_cost": 7432,
+      "best_fp": 2882,
+      "best_fn": 2275,
+      "best_tp": 1955,
+      "best_tn": 52888,
+      "thresholds": [
+        {
+          "threshold": 0.1,
+          "tp": 4170,
+          "fp": 51041,
+          "tn": 4729,
+          "fn": 60,
+          "total_cost": 51161
+        },
+        {
+          "threshold": 0.11,
+          "tp": 4147,
+          "fp": 48753,
+          "tn": 7017,
+          "fn": 83,
+          "total_cost": 48919
+        },
+        {
+          "threshold": 0.12,
+          "tp": 4126,
+          "fp": 45815,
+          "tn": 9955,
+          "fn": 104,
+          "total_cost": 46023
+        },
+        {
+          "threshold": 0.13,
+          "tp": 4080,
+          "fp": 42315,
+          "tn": 13455,
+          "fn": 150,
+          "total_cost": 42615
+        },
+        {
+          "threshold": 0.14,
+          "tp": 4038,
+          "fp": 38432,
+          "tn": 17338,
+          "fn": 192,
+          "total_cost": 38816
+        },
+        {
+          "threshold": 0.15,
+          "tp": 3985,
+          "fp": 34141,
+          "tn": 21629,
+          "fn": 245,
+          "total_cost": 34631
+        },
+        {
+          "threshold": 0.16,
+          "tp": 3928,
+          "fp": 29851,
+          "tn": 25919,
+          "fn": 302,
+          "total_cost": 30455
+        },
+        {
+          "threshold": 0.17,
+          "tp": 3862,
+          "fp": 25705,
+          "tn": 30065,
+          "fn": 368,
+          "total_cost": 26441
+        },
+        {
+          "threshold": 0.18,
+          "tp": 3803,
+          "fp": 21888,
+          "tn": 33882,
+          "fn": 427,
+          "total_cost": 22742
+        },
+        {
+          "threshold": 0.19,
+          "tp": 3741,
+          "fp": 18569,
+          "tn": 37201,
+          "fn": 489,
+          "total_cost": 19547
+        },
+        {
+          "threshold": 0.2,
+          "tp": 3698,
+          "fp": 15818,
+          "tn": 39952,
+          "fn": 532,
+          "total_cost": 16882
+        },
+        {
+          "threshold": 0.21,
+          "tp": 3645,
+          "fp": 13674,
+          "tn": 42096,
+          "fn": 585,
+          "total_cost": 14844
+        },
+        {
+          "threshold": 0.22,
+          "tp": 3594,
+          "fp": 12109,
+          "tn": 43661,
+          "fn": 636,
+          "total_cost": 13381
+        },
+        {
+          "threshold": 0.23,
+          "tp": 3568,
+          "fp": 10927,
+          "tn": 44843,
+          "fn": 662,
+          "total_cost": 12251
+        },
+        {
+          "threshold": 0.24,
+          "tp": 3536,
+          "fp": 10006,
+          "tn": 45764,
+          "fn": 694,
+          "total_cost": 11394
+        },
+        {
+          "threshold": 0.25,
+          "tp": 3506,
+          "fp": 9385,
+          "tn": 46385,
+          "fn": 724,
+          "total_cost": 10833
+        },
+        {
+          "threshold": 0.26,
+          "tp": 3492,
+          "fp": 8928,
+          "tn": 46842,
+          "fn": 738,
+          "total_cost": 10404
+        },
+        {
+          "threshold": 0.27,
+          "tp": 3476,
+          "fp": 8528,
+          "tn": 47242,
+          "fn": 754,
+          "total_cost": 10036
+        },
+        {
+          "threshold": 0.28,
+          "tp": 3459,
+          "fp": 8267,
+          "tn": 47503,
+          "fn": 771,
+          "total_cost": 9809
+        },
+        {
+          "threshold": 0.29,
+          "tp": 3450,
+          "fp": 8073,
+          "tn": 47697,
+          "fn": 780,
+          "total_cost": 9633
+        },
+        {
+          "threshold": 0.3,
+          "tp": 3443,
+          "fp": 7932,
+          "tn": 47838,
+          "fn": 787,
+          "total_cost": 9506
+        },
+        {
+          "threshold": 0.31,
+          "tp": 3438,
+          "fp": 7821,
+          "tn": 47949,
+          "fn": 792,
+          "total_cost": 9405
+        },
+        {
+          "threshold": 0.32,
+          "tp": 3433,
+          "fp": 7745,
+          "tn": 48025,
+          "fn": 797,
+          "total_cost": 9339
+        },
+        {
+          "threshold": 0.33,
+          "tp": 3430,
+          "fp": 7669,
+          "tn": 48101,
+          "fn": 800,
+          "total_cost": 9269
+        },
+        {
+          "threshold": 0.34,
+          "tp": 3428,
+          "fp": 7613,
+          "tn": 48157,
+          "fn": 802,
+          "total_cost": 9217
+        },
+        {
+          "threshold": 0.35,
+          "tp": 3426,
+          "fp": 7567,
+          "tn": 48203,
+          "fn": 804,
+          "total_cost": 9175
+        },
+        {
+          "threshold": 0.36,
+          "tp": 3423,
+          "fp": 7536,
+          "tn": 48234,
+          "fn": 807,
+          "total_cost": 9150
+        },
+        {
+          "threshold": 0.37,
+          "tp": 3422,
+          "fp": 7516,
+          "tn": 48254,
+          "fn": 808,
+          "total_cost": 9132
+        },
+        {
+          "threshold": 0.38,
+          "tp": 3421,
+          "fp": 7494,
+          "tn": 48276,
+          "fn": 809,
+          "total_cost": 9112
+        },
+        {
+          "threshold": 0.39,
+          "tp": 3417,
+          "fp": 7472,
+          "tn": 48298,
+          "fn": 813,
+          "total_cost": 9098
+        },
+        {
+          "threshold": 0.4,
+          "tp": 3415,
+          "fp": 7459,
+          "tn": 48311,
+          "fn": 815,
+          "total_cost": 9089
+        },
+        {
+          "threshold": 0.41,
+          "tp": 3412,
+          "fp": 7452,
+          "tn": 48318,
+          "fn": 818,
+          "total_cost": 9088
+        },
+        {
+          "threshold": 0.42,
+          "tp": 3412,
+          "fp": 7446,
+          "tn": 48324,
+          "fn": 818,
+          "total_cost": 9082
+        },
+        {
+          "threshold": 0.43,
+          "tp": 3412,
+          "fp": 7439,
+          "tn": 48331,
+          "fn": 818,
+          "total_cost": 9075
+        },
+        {
+          "threshold": 0.44,
+          "tp": 3411,
+          "fp": 7432,
+          "tn": 48338,
+          "fn": 819,
+          "total_cost": 9070
+        },
+        {
+          "threshold": 0.45,
+          "tp": 3410,
+          "fp": 7428,
+          "tn": 48342,
+          "fn": 820,
+          "total_cost": 9068
+        },
+        {
+          "threshold": 0.46,
+          "tp": 3410,
+          "fp": 7423,
+          "tn": 48347,
+          "fn": 820,
+          "total_cost": 9063
+        },
+        {
+          "threshold": 0.47,
+          "tp": 3410,
+          "fp": 7419,
+          "tn": 48351,
+          "fn": 820,
+          "total_cost": 9059
+        },
+        {
+          "threshold": 0.48,
+          "tp": 3410,
+          "fp": 7413,
+          "tn": 48357,
+          "fn": 820,
+          "total_cost": 9053
+        },
+        {
+          "threshold": 0.49,
+          "tp": 3410,
+          "fp": 7410,
+          "tn": 48360,
+          "fn": 820,
+          "total_cost": 9050
+        },
+        {
+          "threshold": 0.5,
+          "tp": 3410,
+          "fp": 7405,
+          "tn": 48365,
+          "fn": 820,
+          "total_cost": 9045
+        },
+        {
+          "threshold": 0.51,
+          "tp": 3410,
+          "fp": 7402,
+          "tn": 48368,
+          "fn": 820,
+          "total_cost": 9042
+        },
+        {
+          "threshold": 0.52,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 9040
+        },
+        {
+          "threshold": 0.53,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 9040
+        },
+        {
+          "threshold": 0.54,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 9039
+        },
+        {
+          "threshold": 0.55,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 9039
+        },
+        {
+          "threshold": 0.56,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 9039
+        },
+        {
+          "threshold": 0.57,
+          "tp": 3410,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 820,
+          "total_cost": 9037
+        },
+        {
+          "threshold": 0.58,
+          "tp": 3409,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 821,
+          "total_cost": 9039
+        },
+        {
+          "threshold": 0.59,
+          "tp": 3407,
+          "fp": 7396,
+          "tn": 48374,
+          "fn": 823,
+          "total_cost": 9042
+        },
+        {
+          "threshold": 0.6,
+          "tp": 3407,
+          "fp": 7392,
+          "tn": 48378,
+          "fn": 823,
+          "total_cost": 9038
+        },
+        {
+          "threshold": 0.61,
+          "tp": 3407,
+          "fp": 7391,
+          "tn": 48379,
+          "fn": 823,
+          "total_cost": 9037
+        },
+        {
+          "threshold": 0.62,
+          "tp": 3405,
+          "fp": 7388,
+          "tn": 48382,
+          "fn": 825,
+          "total_cost": 9038
+        },
+        {
+          "threshold": 0.63,
+          "tp": 3405,
+          "fp": 7383,
+          "tn": 48387,
+          "fn": 825,
+          "total_cost": 9033
+        },
+        {
+          "threshold": 0.64,
+          "tp": 3404,
+          "fp": 7376,
+          "tn": 48394,
+          "fn": 826,
+          "total_cost": 9028
+        },
+        {
+          "threshold": 0.65,
+          "tp": 3403,
+          "fp": 7368,
+          "tn": 48402,
+          "fn": 827,
+          "total_cost": 9022
+        },
+        {
+          "threshold": 0.66,
+          "tp": 3400,
+          "fp": 7357,
+          "tn": 48413,
+          "fn": 830,
+          "total_cost": 9017
+        },
+        {
+          "threshold": 0.67,
+          "tp": 3399,
+          "fp": 7338,
+          "tn": 48432,
+          "fn": 831,
+          "total_cost": 9000
+        },
+        {
+          "threshold": 0.68,
+          "tp": 3393,
+          "fp": 7318,
+          "tn": 48452,
+          "fn": 837,
+          "total_cost": 8992
+        },
+        {
+          "threshold": 0.69,
+          "tp": 3385,
+          "fp": 7288,
+          "tn": 48482,
+          "fn": 845,
+          "total_cost": 8978
+        },
+        {
+          "threshold": 0.7,
+          "tp": 3378,
+          "fp": 7248,
+          "tn": 48522,
+          "fn": 852,
+          "total_cost": 8952
+        },
+        {
+          "threshold": 0.71,
+          "tp": 3369,
+          "fp": 7194,
+          "tn": 48576,
+          "fn": 861,
+          "total_cost": 8916
+        },
+        {
+          "threshold": 0.72,
+          "tp": 3343,
+          "fp": 7133,
+          "tn": 48637,
+          "fn": 887,
+          "total_cost": 8907
+        },
+        {
+          "threshold": 0.73,
+          "tp": 3319,
+          "fp": 7029,
+          "tn": 48741,
+          "fn": 911,
+          "total_cost": 8851
+        },
+        {
+          "threshold": 0.74,
+          "tp": 3293,
+          "fp": 6896,
+          "tn": 48874,
+          "fn": 937,
+          "total_cost": 8770
+        },
+        {
+          "threshold": 0.75,
+          "tp": 3264,
+          "fp": 6743,
+          "tn": 49027,
+          "fn": 966,
+          "total_cost": 8675
+        },
+        {
+          "threshold": 0.76,
+          "tp": 3214,
+          "fp": 6568,
+          "tn": 49202,
+          "fn": 1016,
+          "total_cost": 8600
+        },
+        {
+          "threshold": 0.77,
+          "tp": 3147,
+          "fp": 6362,
+          "tn": 49408,
+          "fn": 1083,
+          "total_cost": 8528
+        },
+        {
+          "threshold": 0.78,
+          "tp": 3069,
+          "fp": 6118,
+          "tn": 49652,
+          "fn": 1161,
+          "total_cost": 8440
+        },
+        {
+          "threshold": 0.79,
+          "tp": 2994,
+          "fp": 5841,
+          "tn": 49929,
+          "fn": 1236,
+          "total_cost": 8313
+        },
+        {
+          "threshold": 0.8,
+          "tp": 2898,
+          "fp": 5535,
+          "tn": 50235,
+          "fn": 1332,
+          "total_cost": 8199
+        },
+        {
+          "threshold": 0.81,
+          "tp": 2802,
+          "fp": 5252,
+          "tn": 50518,
+          "fn": 1428,
+          "total_cost": 8108
+        },
+        {
+          "threshold": 0.82,
+          "tp": 2704,
+          "fp": 4968,
+          "tn": 50802,
+          "fn": 1526,
+          "total_cost": 8020
+        },
+        {
+          "threshold": 0.83,
+          "tp": 2624,
+          "fp": 4678,
+          "tn": 51092,
+          "fn": 1606,
+          "total_cost": 7890
+        },
+        {
+          "threshold": 0.84,
+          "tp": 2556,
+          "fp": 4416,
+          "tn": 51354,
+          "fn": 1674,
+          "total_cost": 7764
+        },
+        {
+          "threshold": 0.85,
+          "tp": 2464,
+          "fp": 4134,
+          "tn": 51636,
+          "fn": 1766,
+          "total_cost": 7666
+        },
+        {
+          "threshold": 0.86,
+          "tp": 2370,
+          "fp": 3895,
+          "tn": 51875,
+          "fn": 1860,
+          "total_cost": 7615
+        },
+        {
+          "threshold": 0.87,
+          "tp": 2295,
+          "fp": 3656,
+          "tn": 52114,
+          "fn": 1935,
+          "total_cost": 7526
+        },
+        {
+          "threshold": 0.88,
+          "tp": 2196,
+          "fp": 3391,
+          "tn": 52379,
+          "fn": 2034,
+          "total_cost": 7459
+        },
+        {
+          "threshold": 0.89,
+          "tp": 2087,
+          "fp": 3152,
+          "tn": 52618,
+          "fn": 2143,
+          "total_cost": 7438
+        },
+        {
+          "threshold": 0.9,
+          "tp": 1955,
+          "fp": 2882,
+          "tn": 52888,
+          "fn": 2275,
+          "total_cost": 7432
+        }
+      ]
+    },
+    "5_to_1": {
+      "fn_cost": 5,
+      "fp_cost": 1,
+      "best_threshold": 0.67,
+      "best_total_cost": 11493,
+      "best_fp": 7338,
+      "best_fn": 831,
+      "best_tp": 3399,
+      "best_tn": 48432,
+      "thresholds": [
+        {
+          "threshold": 0.1,
+          "tp": 4170,
+          "fp": 51041,
+          "tn": 4729,
+          "fn": 60,
+          "total_cost": 51341
+        },
+        {
+          "threshold": 0.11,
+          "tp": 4147,
+          "fp": 48753,
+          "tn": 7017,
+          "fn": 83,
+          "total_cost": 49168
+        },
+        {
+          "threshold": 0.12,
+          "tp": 4126,
+          "fp": 45815,
+          "tn": 9955,
+          "fn": 104,
+          "total_cost": 46335
+        },
+        {
+          "threshold": 0.13,
+          "tp": 4080,
+          "fp": 42315,
+          "tn": 13455,
+          "fn": 150,
+          "total_cost": 43065
+        },
+        {
+          "threshold": 0.14,
+          "tp": 4038,
+          "fp": 38432,
+          "tn": 17338,
+          "fn": 192,
+          "total_cost": 39392
+        },
+        {
+          "threshold": 0.15,
+          "tp": 3985,
+          "fp": 34141,
+          "tn": 21629,
+          "fn": 245,
+          "total_cost": 35366
+        },
+        {
+          "threshold": 0.16,
+          "tp": 3928,
+          "fp": 29851,
+          "tn": 25919,
+          "fn": 302,
+          "total_cost": 31361
+        },
+        {
+          "threshold": 0.17,
+          "tp": 3862,
+          "fp": 25705,
+          "tn": 30065,
+          "fn": 368,
+          "total_cost": 27545
+        },
+        {
+          "threshold": 0.18,
+          "tp": 3803,
+          "fp": 21888,
+          "tn": 33882,
+          "fn": 427,
+          "total_cost": 24023
+        },
+        {
+          "threshold": 0.19,
+          "tp": 3741,
+          "fp": 18569,
+          "tn": 37201,
+          "fn": 489,
+          "total_cost": 21014
+        },
+        {
+          "threshold": 0.2,
+          "tp": 3698,
+          "fp": 15818,
+          "tn": 39952,
+          "fn": 532,
+          "total_cost": 18478
+        },
+        {
+          "threshold": 0.21,
+          "tp": 3645,
+          "fp": 13674,
+          "tn": 42096,
+          "fn": 585,
+          "total_cost": 16599
+        },
+        {
+          "threshold": 0.22,
+          "tp": 3594,
+          "fp": 12109,
+          "tn": 43661,
+          "fn": 636,
+          "total_cost": 15289
+        },
+        {
+          "threshold": 0.23,
+          "tp": 3568,
+          "fp": 10927,
+          "tn": 44843,
+          "fn": 662,
+          "total_cost": 14237
+        },
+        {
+          "threshold": 0.24,
+          "tp": 3536,
+          "fp": 10006,
+          "tn": 45764,
+          "fn": 694,
+          "total_cost": 13476
+        },
+        {
+          "threshold": 0.25,
+          "tp": 3506,
+          "fp": 9385,
+          "tn": 46385,
+          "fn": 724,
+          "total_cost": 13005
+        },
+        {
+          "threshold": 0.26,
+          "tp": 3492,
+          "fp": 8928,
+          "tn": 46842,
+          "fn": 738,
+          "total_cost": 12618
+        },
+        {
+          "threshold": 0.27,
+          "tp": 3476,
+          "fp": 8528,
+          "tn": 47242,
+          "fn": 754,
+          "total_cost": 12298
+        },
+        {
+          "threshold": 0.28,
+          "tp": 3459,
+          "fp": 8267,
+          "tn": 47503,
+          "fn": 771,
+          "total_cost": 12122
+        },
+        {
+          "threshold": 0.29,
+          "tp": 3450,
+          "fp": 8073,
+          "tn": 47697,
+          "fn": 780,
+          "total_cost": 11973
+        },
+        {
+          "threshold": 0.3,
+          "tp": 3443,
+          "fp": 7932,
+          "tn": 47838,
+          "fn": 787,
+          "total_cost": 11867
+        },
+        {
+          "threshold": 0.31,
+          "tp": 3438,
+          "fp": 7821,
+          "tn": 47949,
+          "fn": 792,
+          "total_cost": 11781
+        },
+        {
+          "threshold": 0.32,
+          "tp": 3433,
+          "fp": 7745,
+          "tn": 48025,
+          "fn": 797,
+          "total_cost": 11730
+        },
+        {
+          "threshold": 0.33,
+          "tp": 3430,
+          "fp": 7669,
+          "tn": 48101,
+          "fn": 800,
+          "total_cost": 11669
+        },
+        {
+          "threshold": 0.34,
+          "tp": 3428,
+          "fp": 7613,
+          "tn": 48157,
+          "fn": 802,
+          "total_cost": 11623
+        },
+        {
+          "threshold": 0.35,
+          "tp": 3426,
+          "fp": 7567,
+          "tn": 48203,
+          "fn": 804,
+          "total_cost": 11587
+        },
+        {
+          "threshold": 0.36,
+          "tp": 3423,
+          "fp": 7536,
+          "tn": 48234,
+          "fn": 807,
+          "total_cost": 11571
+        },
+        {
+          "threshold": 0.37,
+          "tp": 3422,
+          "fp": 7516,
+          "tn": 48254,
+          "fn": 808,
+          "total_cost": 11556
+        },
+        {
+          "threshold": 0.38,
+          "tp": 3421,
+          "fp": 7494,
+          "tn": 48276,
+          "fn": 809,
+          "total_cost": 11539
+        },
+        {
+          "threshold": 0.39,
+          "tp": 3417,
+          "fp": 7472,
+          "tn": 48298,
+          "fn": 813,
+          "total_cost": 11537
+        },
+        {
+          "threshold": 0.4,
+          "tp": 3415,
+          "fp": 7459,
+          "tn": 48311,
+          "fn": 815,
+          "total_cost": 11534
+        },
+        {
+          "threshold": 0.41,
+          "tp": 3412,
+          "fp": 7452,
+          "tn": 48318,
+          "fn": 818,
+          "total_cost": 11542
+        },
+        {
+          "threshold": 0.42,
+          "tp": 3412,
+          "fp": 7446,
+          "tn": 48324,
+          "fn": 818,
+          "total_cost": 11536
+        },
+        {
+          "threshold": 0.43,
+          "tp": 3412,
+          "fp": 7439,
+          "tn": 48331,
+          "fn": 818,
+          "total_cost": 11529
+        },
+        {
+          "threshold": 0.44,
+          "tp": 3411,
+          "fp": 7432,
+          "tn": 48338,
+          "fn": 819,
+          "total_cost": 11527
+        },
+        {
+          "threshold": 0.45,
+          "tp": 3410,
+          "fp": 7428,
+          "tn": 48342,
+          "fn": 820,
+          "total_cost": 11528
+        },
+        {
+          "threshold": 0.46,
+          "tp": 3410,
+          "fp": 7423,
+          "tn": 48347,
+          "fn": 820,
+          "total_cost": 11523
+        },
+        {
+          "threshold": 0.47,
+          "tp": 3410,
+          "fp": 7419,
+          "tn": 48351,
+          "fn": 820,
+          "total_cost": 11519
+        },
+        {
+          "threshold": 0.48,
+          "tp": 3410,
+          "fp": 7413,
+          "tn": 48357,
+          "fn": 820,
+          "total_cost": 11513
+        },
+        {
+          "threshold": 0.49,
+          "tp": 3410,
+          "fp": 7410,
+          "tn": 48360,
+          "fn": 820,
+          "total_cost": 11510
+        },
+        {
+          "threshold": 0.5,
+          "tp": 3410,
+          "fp": 7405,
+          "tn": 48365,
+          "fn": 820,
+          "total_cost": 11505
+        },
+        {
+          "threshold": 0.51,
+          "tp": 3410,
+          "fp": 7402,
+          "tn": 48368,
+          "fn": 820,
+          "total_cost": 11502
+        },
+        {
+          "threshold": 0.52,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 11500
+        },
+        {
+          "threshold": 0.53,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 11500
+        },
+        {
+          "threshold": 0.54,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 11499
+        },
+        {
+          "threshold": 0.55,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 11499
+        },
+        {
+          "threshold": 0.56,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 11499
+        },
+        {
+          "threshold": 0.57,
+          "tp": 3410,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 820,
+          "total_cost": 11497
+        },
+        {
+          "threshold": 0.58,
+          "tp": 3409,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 821,
+          "total_cost": 11502
+        },
+        {
+          "threshold": 0.59,
+          "tp": 3407,
+          "fp": 7396,
+          "tn": 48374,
+          "fn": 823,
+          "total_cost": 11511
+        },
+        {
+          "threshold": 0.6,
+          "tp": 3407,
+          "fp": 7392,
+          "tn": 48378,
+          "fn": 823,
+          "total_cost": 11507
+        },
+        {
+          "threshold": 0.61,
+          "tp": 3407,
+          "fp": 7391,
+          "tn": 48379,
+          "fn": 823,
+          "total_cost": 11506
+        },
+        {
+          "threshold": 0.62,
+          "tp": 3405,
+          "fp": 7388,
+          "tn": 48382,
+          "fn": 825,
+          "total_cost": 11513
+        },
+        {
+          "threshold": 0.63,
+          "tp": 3405,
+          "fp": 7383,
+          "tn": 48387,
+          "fn": 825,
+          "total_cost": 11508
+        },
+        {
+          "threshold": 0.64,
+          "tp": 3404,
+          "fp": 7376,
+          "tn": 48394,
+          "fn": 826,
+          "total_cost": 11506
+        },
+        {
+          "threshold": 0.65,
+          "tp": 3403,
+          "fp": 7368,
+          "tn": 48402,
+          "fn": 827,
+          "total_cost": 11503
+        },
+        {
+          "threshold": 0.66,
+          "tp": 3400,
+          "fp": 7357,
+          "tn": 48413,
+          "fn": 830,
+          "total_cost": 11507
+        },
+        {
+          "threshold": 0.67,
+          "tp": 3399,
+          "fp": 7338,
+          "tn": 48432,
+          "fn": 831,
+          "total_cost": 11493
+        },
+        {
+          "threshold": 0.68,
+          "tp": 3393,
+          "fp": 7318,
+          "tn": 48452,
+          "fn": 837,
+          "total_cost": 11503
+        },
+        {
+          "threshold": 0.69,
+          "tp": 3385,
+          "fp": 7288,
+          "tn": 48482,
+          "fn": 845,
+          "total_cost": 11513
+        },
+        {
+          "threshold": 0.7,
+          "tp": 3378,
+          "fp": 7248,
+          "tn": 48522,
+          "fn": 852,
+          "total_cost": 11508
+        },
+        {
+          "threshold": 0.71,
+          "tp": 3369,
+          "fp": 7194,
+          "tn": 48576,
+          "fn": 861,
+          "total_cost": 11499
+        },
+        {
+          "threshold": 0.72,
+          "tp": 3343,
+          "fp": 7133,
+          "tn": 48637,
+          "fn": 887,
+          "total_cost": 11568
+        },
+        {
+          "threshold": 0.73,
+          "tp": 3319,
+          "fp": 7029,
+          "tn": 48741,
+          "fn": 911,
+          "total_cost": 11584
+        },
+        {
+          "threshold": 0.74,
+          "tp": 3293,
+          "fp": 6896,
+          "tn": 48874,
+          "fn": 937,
+          "total_cost": 11581
+        },
+        {
+          "threshold": 0.75,
+          "tp": 3264,
+          "fp": 6743,
+          "tn": 49027,
+          "fn": 966,
+          "total_cost": 11573
+        },
+        {
+          "threshold": 0.76,
+          "tp": 3214,
+          "fp": 6568,
+          "tn": 49202,
+          "fn": 1016,
+          "total_cost": 11648
+        },
+        {
+          "threshold": 0.77,
+          "tp": 3147,
+          "fp": 6362,
+          "tn": 49408,
+          "fn": 1083,
+          "total_cost": 11777
+        },
+        {
+          "threshold": 0.78,
+          "tp": 3069,
+          "fp": 6118,
+          "tn": 49652,
+          "fn": 1161,
+          "total_cost": 11923
+        },
+        {
+          "threshold": 0.79,
+          "tp": 2994,
+          "fp": 5841,
+          "tn": 49929,
+          "fn": 1236,
+          "total_cost": 12021
+        },
+        {
+          "threshold": 0.8,
+          "tp": 2898,
+          "fp": 5535,
+          "tn": 50235,
+          "fn": 1332,
+          "total_cost": 12195
+        },
+        {
+          "threshold": 0.81,
+          "tp": 2802,
+          "fp": 5252,
+          "tn": 50518,
+          "fn": 1428,
+          "total_cost": 12392
+        },
+        {
+          "threshold": 0.82,
+          "tp": 2704,
+          "fp": 4968,
+          "tn": 50802,
+          "fn": 1526,
+          "total_cost": 12598
+        },
+        {
+          "threshold": 0.83,
+          "tp": 2624,
+          "fp": 4678,
+          "tn": 51092,
+          "fn": 1606,
+          "total_cost": 12708
+        },
+        {
+          "threshold": 0.84,
+          "tp": 2556,
+          "fp": 4416,
+          "tn": 51354,
+          "fn": 1674,
+          "total_cost": 12786
+        },
+        {
+          "threshold": 0.85,
+          "tp": 2464,
+          "fp": 4134,
+          "tn": 51636,
+          "fn": 1766,
+          "total_cost": 12964
+        },
+        {
+          "threshold": 0.86,
+          "tp": 2370,
+          "fp": 3895,
+          "tn": 51875,
+          "fn": 1860,
+          "total_cost": 13195
+        },
+        {
+          "threshold": 0.87,
+          "tp": 2295,
+          "fp": 3656,
+          "tn": 52114,
+          "fn": 1935,
+          "total_cost": 13331
+        },
+        {
+          "threshold": 0.88,
+          "tp": 2196,
+          "fp": 3391,
+          "tn": 52379,
+          "fn": 2034,
+          "total_cost": 13561
+        },
+        {
+          "threshold": 0.89,
+          "tp": 2087,
+          "fp": 3152,
+          "tn": 52618,
+          "fn": 2143,
+          "total_cost": 13867
+        },
+        {
+          "threshold": 0.9,
+          "tp": 1955,
+          "fp": 2882,
+          "tn": 52888,
+          "fn": 2275,
+          "total_cost": 14257
+        }
+      ]
+    },
+    "10_to_1": {
+      "fn_cost": 10,
+      "fp_cost": 1,
+      "best_threshold": 0.38,
+      "best_total_cost": 15584,
+      "best_fp": 7494,
+      "best_fn": 809,
+      "best_tp": 3421,
+      "best_tn": 48276,
+      "thresholds": [
+        {
+          "threshold": 0.1,
+          "tp": 4170,
+          "fp": 51041,
+          "tn": 4729,
+          "fn": 60,
+          "total_cost": 51641
+        },
+        {
+          "threshold": 0.11,
+          "tp": 4147,
+          "fp": 48753,
+          "tn": 7017,
+          "fn": 83,
+          "total_cost": 49583
+        },
+        {
+          "threshold": 0.12,
+          "tp": 4126,
+          "fp": 45815,
+          "tn": 9955,
+          "fn": 104,
+          "total_cost": 46855
+        },
+        {
+          "threshold": 0.13,
+          "tp": 4080,
+          "fp": 42315,
+          "tn": 13455,
+          "fn": 150,
+          "total_cost": 43815
+        },
+        {
+          "threshold": 0.14,
+          "tp": 4038,
+          "fp": 38432,
+          "tn": 17338,
+          "fn": 192,
+          "total_cost": 40352
+        },
+        {
+          "threshold": 0.15,
+          "tp": 3985,
+          "fp": 34141,
+          "tn": 21629,
+          "fn": 245,
+          "total_cost": 36591
+        },
+        {
+          "threshold": 0.16,
+          "tp": 3928,
+          "fp": 29851,
+          "tn": 25919,
+          "fn": 302,
+          "total_cost": 32871
+        },
+        {
+          "threshold": 0.17,
+          "tp": 3862,
+          "fp": 25705,
+          "tn": 30065,
+          "fn": 368,
+          "total_cost": 29385
+        },
+        {
+          "threshold": 0.18,
+          "tp": 3803,
+          "fp": 21888,
+          "tn": 33882,
+          "fn": 427,
+          "total_cost": 26158
+        },
+        {
+          "threshold": 0.19,
+          "tp": 3741,
+          "fp": 18569,
+          "tn": 37201,
+          "fn": 489,
+          "total_cost": 23459
+        },
+        {
+          "threshold": 0.2,
+          "tp": 3698,
+          "fp": 15818,
+          "tn": 39952,
+          "fn": 532,
+          "total_cost": 21138
+        },
+        {
+          "threshold": 0.21,
+          "tp": 3645,
+          "fp": 13674,
+          "tn": 42096,
+          "fn": 585,
+          "total_cost": 19524
+        },
+        {
+          "threshold": 0.22,
+          "tp": 3594,
+          "fp": 12109,
+          "tn": 43661,
+          "fn": 636,
+          "total_cost": 18469
+        },
+        {
+          "threshold": 0.23,
+          "tp": 3568,
+          "fp": 10927,
+          "tn": 44843,
+          "fn": 662,
+          "total_cost": 17547
+        },
+        {
+          "threshold": 0.24,
+          "tp": 3536,
+          "fp": 10006,
+          "tn": 45764,
+          "fn": 694,
+          "total_cost": 16946
+        },
+        {
+          "threshold": 0.25,
+          "tp": 3506,
+          "fp": 9385,
+          "tn": 46385,
+          "fn": 724,
+          "total_cost": 16625
+        },
+        {
+          "threshold": 0.26,
+          "tp": 3492,
+          "fp": 8928,
+          "tn": 46842,
+          "fn": 738,
+          "total_cost": 16308
+        },
+        {
+          "threshold": 0.27,
+          "tp": 3476,
+          "fp": 8528,
+          "tn": 47242,
+          "fn": 754,
+          "total_cost": 16068
+        },
+        {
+          "threshold": 0.28,
+          "tp": 3459,
+          "fp": 8267,
+          "tn": 47503,
+          "fn": 771,
+          "total_cost": 15977
+        },
+        {
+          "threshold": 0.29,
+          "tp": 3450,
+          "fp": 8073,
+          "tn": 47697,
+          "fn": 780,
+          "total_cost": 15873
+        },
+        {
+          "threshold": 0.3,
+          "tp": 3443,
+          "fp": 7932,
+          "tn": 47838,
+          "fn": 787,
+          "total_cost": 15802
+        },
+        {
+          "threshold": 0.31,
+          "tp": 3438,
+          "fp": 7821,
+          "tn": 47949,
+          "fn": 792,
+          "total_cost": 15741
+        },
+        {
+          "threshold": 0.32,
+          "tp": 3433,
+          "fp": 7745,
+          "tn": 48025,
+          "fn": 797,
+          "total_cost": 15715
+        },
+        {
+          "threshold": 0.33,
+          "tp": 3430,
+          "fp": 7669,
+          "tn": 48101,
+          "fn": 800,
+          "total_cost": 15669
+        },
+        {
+          "threshold": 0.34,
+          "tp": 3428,
+          "fp": 7613,
+          "tn": 48157,
+          "fn": 802,
+          "total_cost": 15633
+        },
+        {
+          "threshold": 0.35,
+          "tp": 3426,
+          "fp": 7567,
+          "tn": 48203,
+          "fn": 804,
+          "total_cost": 15607
+        },
+        {
+          "threshold": 0.36,
+          "tp": 3423,
+          "fp": 7536,
+          "tn": 48234,
+          "fn": 807,
+          "total_cost": 15606
+        },
+        {
+          "threshold": 0.37,
+          "tp": 3422,
+          "fp": 7516,
+          "tn": 48254,
+          "fn": 808,
+          "total_cost": 15596
+        },
+        {
+          "threshold": 0.38,
+          "tp": 3421,
+          "fp": 7494,
+          "tn": 48276,
+          "fn": 809,
+          "total_cost": 15584
+        },
+        {
+          "threshold": 0.39,
+          "tp": 3417,
+          "fp": 7472,
+          "tn": 48298,
+          "fn": 813,
+          "total_cost": 15602
+        },
+        {
+          "threshold": 0.4,
+          "tp": 3415,
+          "fp": 7459,
+          "tn": 48311,
+          "fn": 815,
+          "total_cost": 15609
+        },
+        {
+          "threshold": 0.41,
+          "tp": 3412,
+          "fp": 7452,
+          "tn": 48318,
+          "fn": 818,
+          "total_cost": 15632
+        },
+        {
+          "threshold": 0.42,
+          "tp": 3412,
+          "fp": 7446,
+          "tn": 48324,
+          "fn": 818,
+          "total_cost": 15626
+        },
+        {
+          "threshold": 0.43,
+          "tp": 3412,
+          "fp": 7439,
+          "tn": 48331,
+          "fn": 818,
+          "total_cost": 15619
+        },
+        {
+          "threshold": 0.44,
+          "tp": 3411,
+          "fp": 7432,
+          "tn": 48338,
+          "fn": 819,
+          "total_cost": 15622
+        },
+        {
+          "threshold": 0.45,
+          "tp": 3410,
+          "fp": 7428,
+          "tn": 48342,
+          "fn": 820,
+          "total_cost": 15628
+        },
+        {
+          "threshold": 0.46,
+          "tp": 3410,
+          "fp": 7423,
+          "tn": 48347,
+          "fn": 820,
+          "total_cost": 15623
+        },
+        {
+          "threshold": 0.47,
+          "tp": 3410,
+          "fp": 7419,
+          "tn": 48351,
+          "fn": 820,
+          "total_cost": 15619
+        },
+        {
+          "threshold": 0.48,
+          "tp": 3410,
+          "fp": 7413,
+          "tn": 48357,
+          "fn": 820,
+          "total_cost": 15613
+        },
+        {
+          "threshold": 0.49,
+          "tp": 3410,
+          "fp": 7410,
+          "tn": 48360,
+          "fn": 820,
+          "total_cost": 15610
+        },
+        {
+          "threshold": 0.5,
+          "tp": 3410,
+          "fp": 7405,
+          "tn": 48365,
+          "fn": 820,
+          "total_cost": 15605
+        },
+        {
+          "threshold": 0.51,
+          "tp": 3410,
+          "fp": 7402,
+          "tn": 48368,
+          "fn": 820,
+          "total_cost": 15602
+        },
+        {
+          "threshold": 0.52,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 15600
+        },
+        {
+          "threshold": 0.53,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 15600
+        },
+        {
+          "threshold": 0.54,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 15599
+        },
+        {
+          "threshold": 0.55,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 15599
+        },
+        {
+          "threshold": 0.56,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 15599
+        },
+        {
+          "threshold": 0.57,
+          "tp": 3410,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 820,
+          "total_cost": 15597
+        },
+        {
+          "threshold": 0.58,
+          "tp": 3409,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 821,
+          "total_cost": 15607
+        },
+        {
+          "threshold": 0.59,
+          "tp": 3407,
+          "fp": 7396,
+          "tn": 48374,
+          "fn": 823,
+          "total_cost": 15626
+        },
+        {
+          "threshold": 0.6,
+          "tp": 3407,
+          "fp": 7392,
+          "tn": 48378,
+          "fn": 823,
+          "total_cost": 15622
+        },
+        {
+          "threshold": 0.61,
+          "tp": 3407,
+          "fp": 7391,
+          "tn": 48379,
+          "fn": 823,
+          "total_cost": 15621
+        },
+        {
+          "threshold": 0.62,
+          "tp": 3405,
+          "fp": 7388,
+          "tn": 48382,
+          "fn": 825,
+          "total_cost": 15638
+        },
+        {
+          "threshold": 0.63,
+          "tp": 3405,
+          "fp": 7383,
+          "tn": 48387,
+          "fn": 825,
+          "total_cost": 15633
+        },
+        {
+          "threshold": 0.64,
+          "tp": 3404,
+          "fp": 7376,
+          "tn": 48394,
+          "fn": 826,
+          "total_cost": 15636
+        },
+        {
+          "threshold": 0.65,
+          "tp": 3403,
+          "fp": 7368,
+          "tn": 48402,
+          "fn": 827,
+          "total_cost": 15638
+        },
+        {
+          "threshold": 0.66,
+          "tp": 3400,
+          "fp": 7357,
+          "tn": 48413,
+          "fn": 830,
+          "total_cost": 15657
+        },
+        {
+          "threshold": 0.67,
+          "tp": 3399,
+          "fp": 7338,
+          "tn": 48432,
+          "fn": 831,
+          "total_cost": 15648
+        },
+        {
+          "threshold": 0.68,
+          "tp": 3393,
+          "fp": 7318,
+          "tn": 48452,
+          "fn": 837,
+          "total_cost": 15688
+        },
+        {
+          "threshold": 0.69,
+          "tp": 3385,
+          "fp": 7288,
+          "tn": 48482,
+          "fn": 845,
+          "total_cost": 15738
+        },
+        {
+          "threshold": 0.7,
+          "tp": 3378,
+          "fp": 7248,
+          "tn": 48522,
+          "fn": 852,
+          "total_cost": 15768
+        },
+        {
+          "threshold": 0.71,
+          "tp": 3369,
+          "fp": 7194,
+          "tn": 48576,
+          "fn": 861,
+          "total_cost": 15804
+        },
+        {
+          "threshold": 0.72,
+          "tp": 3343,
+          "fp": 7133,
+          "tn": 48637,
+          "fn": 887,
+          "total_cost": 16003
+        },
+        {
+          "threshold": 0.73,
+          "tp": 3319,
+          "fp": 7029,
+          "tn": 48741,
+          "fn": 911,
+          "total_cost": 16139
+        },
+        {
+          "threshold": 0.74,
+          "tp": 3293,
+          "fp": 6896,
+          "tn": 48874,
+          "fn": 937,
+          "total_cost": 16266
+        },
+        {
+          "threshold": 0.75,
+          "tp": 3264,
+          "fp": 6743,
+          "tn": 49027,
+          "fn": 966,
+          "total_cost": 16403
+        },
+        {
+          "threshold": 0.76,
+          "tp": 3214,
+          "fp": 6568,
+          "tn": 49202,
+          "fn": 1016,
+          "total_cost": 16728
+        },
+        {
+          "threshold": 0.77,
+          "tp": 3147,
+          "fp": 6362,
+          "tn": 49408,
+          "fn": 1083,
+          "total_cost": 17192
+        },
+        {
+          "threshold": 0.78,
+          "tp": 3069,
+          "fp": 6118,
+          "tn": 49652,
+          "fn": 1161,
+          "total_cost": 17728
+        },
+        {
+          "threshold": 0.79,
+          "tp": 2994,
+          "fp": 5841,
+          "tn": 49929,
+          "fn": 1236,
+          "total_cost": 18201
+        },
+        {
+          "threshold": 0.8,
+          "tp": 2898,
+          "fp": 5535,
+          "tn": 50235,
+          "fn": 1332,
+          "total_cost": 18855
+        },
+        {
+          "threshold": 0.81,
+          "tp": 2802,
+          "fp": 5252,
+          "tn": 50518,
+          "fn": 1428,
+          "total_cost": 19532
+        },
+        {
+          "threshold": 0.82,
+          "tp": 2704,
+          "fp": 4968,
+          "tn": 50802,
+          "fn": 1526,
+          "total_cost": 20228
+        },
+        {
+          "threshold": 0.83,
+          "tp": 2624,
+          "fp": 4678,
+          "tn": 51092,
+          "fn": 1606,
+          "total_cost": 20738
+        },
+        {
+          "threshold": 0.84,
+          "tp": 2556,
+          "fp": 4416,
+          "tn": 51354,
+          "fn": 1674,
+          "total_cost": 21156
+        },
+        {
+          "threshold": 0.85,
+          "tp": 2464,
+          "fp": 4134,
+          "tn": 51636,
+          "fn": 1766,
+          "total_cost": 21794
+        },
+        {
+          "threshold": 0.86,
+          "tp": 2370,
+          "fp": 3895,
+          "tn": 51875,
+          "fn": 1860,
+          "total_cost": 22495
+        },
+        {
+          "threshold": 0.87,
+          "tp": 2295,
+          "fp": 3656,
+          "tn": 52114,
+          "fn": 1935,
+          "total_cost": 23006
+        },
+        {
+          "threshold": 0.88,
+          "tp": 2196,
+          "fp": 3391,
+          "tn": 52379,
+          "fn": 2034,
+          "total_cost": 23731
+        },
+        {
+          "threshold": 0.89,
+          "tp": 2087,
+          "fp": 3152,
+          "tn": 52618,
+          "fn": 2143,
+          "total_cost": 24582
+        },
+        {
+          "threshold": 0.9,
+          "tp": 1955,
+          "fp": 2882,
+          "tn": 52888,
+          "fn": 2275,
+          "total_cost": 25632
+        }
+      ]
+    },
+    "20_to_1": {
+      "fn_cost": 20,
+      "fp_cost": 1,
+      "best_threshold": 0.27,
+      "best_total_cost": 23608,
+      "best_fp": 8528,
+      "best_fn": 754,
+      "best_tp": 3476,
+      "best_tn": 47242,
+      "thresholds": [
+        {
+          "threshold": 0.1,
+          "tp": 4170,
+          "fp": 51041,
+          "tn": 4729,
+          "fn": 60,
+          "total_cost": 52241
+        },
+        {
+          "threshold": 0.11,
+          "tp": 4147,
+          "fp": 48753,
+          "tn": 7017,
+          "fn": 83,
+          "total_cost": 50413
+        },
+        {
+          "threshold": 0.12,
+          "tp": 4126,
+          "fp": 45815,
+          "tn": 9955,
+          "fn": 104,
+          "total_cost": 47895
+        },
+        {
+          "threshold": 0.13,
+          "tp": 4080,
+          "fp": 42315,
+          "tn": 13455,
+          "fn": 150,
+          "total_cost": 45315
+        },
+        {
+          "threshold": 0.14,
+          "tp": 4038,
+          "fp": 38432,
+          "tn": 17338,
+          "fn": 192,
+          "total_cost": 42272
+        },
+        {
+          "threshold": 0.15,
+          "tp": 3985,
+          "fp": 34141,
+          "tn": 21629,
+          "fn": 245,
+          "total_cost": 39041
+        },
+        {
+          "threshold": 0.16,
+          "tp": 3928,
+          "fp": 29851,
+          "tn": 25919,
+          "fn": 302,
+          "total_cost": 35891
+        },
+        {
+          "threshold": 0.17,
+          "tp": 3862,
+          "fp": 25705,
+          "tn": 30065,
+          "fn": 368,
+          "total_cost": 33065
+        },
+        {
+          "threshold": 0.18,
+          "tp": 3803,
+          "fp": 21888,
+          "tn": 33882,
+          "fn": 427,
+          "total_cost": 30428
+        },
+        {
+          "threshold": 0.19,
+          "tp": 3741,
+          "fp": 18569,
+          "tn": 37201,
+          "fn": 489,
+          "total_cost": 28349
+        },
+        {
+          "threshold": 0.2,
+          "tp": 3698,
+          "fp": 15818,
+          "tn": 39952,
+          "fn": 532,
+          "total_cost": 26458
+        },
+        {
+          "threshold": 0.21,
+          "tp": 3645,
+          "fp": 13674,
+          "tn": 42096,
+          "fn": 585,
+          "total_cost": 25374
+        },
+        {
+          "threshold": 0.22,
+          "tp": 3594,
+          "fp": 12109,
+          "tn": 43661,
+          "fn": 636,
+          "total_cost": 24829
+        },
+        {
+          "threshold": 0.23,
+          "tp": 3568,
+          "fp": 10927,
+          "tn": 44843,
+          "fn": 662,
+          "total_cost": 24167
+        },
+        {
+          "threshold": 0.24,
+          "tp": 3536,
+          "fp": 10006,
+          "tn": 45764,
+          "fn": 694,
+          "total_cost": 23886
+        },
+        {
+          "threshold": 0.25,
+          "tp": 3506,
+          "fp": 9385,
+          "tn": 46385,
+          "fn": 724,
+          "total_cost": 23865
+        },
+        {
+          "threshold": 0.26,
+          "tp": 3492,
+          "fp": 8928,
+          "tn": 46842,
+          "fn": 738,
+          "total_cost": 23688
+        },
+        {
+          "threshold": 0.27,
+          "tp": 3476,
+          "fp": 8528,
+          "tn": 47242,
+          "fn": 754,
+          "total_cost": 23608
+        },
+        {
+          "threshold": 0.28,
+          "tp": 3459,
+          "fp": 8267,
+          "tn": 47503,
+          "fn": 771,
+          "total_cost": 23687
+        },
+        {
+          "threshold": 0.29,
+          "tp": 3450,
+          "fp": 8073,
+          "tn": 47697,
+          "fn": 780,
+          "total_cost": 23673
+        },
+        {
+          "threshold": 0.3,
+          "tp": 3443,
+          "fp": 7932,
+          "tn": 47838,
+          "fn": 787,
+          "total_cost": 23672
+        },
+        {
+          "threshold": 0.31,
+          "tp": 3438,
+          "fp": 7821,
+          "tn": 47949,
+          "fn": 792,
+          "total_cost": 23661
+        },
+        {
+          "threshold": 0.32,
+          "tp": 3433,
+          "fp": 7745,
+          "tn": 48025,
+          "fn": 797,
+          "total_cost": 23685
+        },
+        {
+          "threshold": 0.33,
+          "tp": 3430,
+          "fp": 7669,
+          "tn": 48101,
+          "fn": 800,
+          "total_cost": 23669
+        },
+        {
+          "threshold": 0.34,
+          "tp": 3428,
+          "fp": 7613,
+          "tn": 48157,
+          "fn": 802,
+          "total_cost": 23653
+        },
+        {
+          "threshold": 0.35,
+          "tp": 3426,
+          "fp": 7567,
+          "tn": 48203,
+          "fn": 804,
+          "total_cost": 23647
+        },
+        {
+          "threshold": 0.36,
+          "tp": 3423,
+          "fp": 7536,
+          "tn": 48234,
+          "fn": 807,
+          "total_cost": 23676
+        },
+        {
+          "threshold": 0.37,
+          "tp": 3422,
+          "fp": 7516,
+          "tn": 48254,
+          "fn": 808,
+          "total_cost": 23676
+        },
+        {
+          "threshold": 0.38,
+          "tp": 3421,
+          "fp": 7494,
+          "tn": 48276,
+          "fn": 809,
+          "total_cost": 23674
+        },
+        {
+          "threshold": 0.39,
+          "tp": 3417,
+          "fp": 7472,
+          "tn": 48298,
+          "fn": 813,
+          "total_cost": 23732
+        },
+        {
+          "threshold": 0.4,
+          "tp": 3415,
+          "fp": 7459,
+          "tn": 48311,
+          "fn": 815,
+          "total_cost": 23759
+        },
+        {
+          "threshold": 0.41,
+          "tp": 3412,
+          "fp": 7452,
+          "tn": 48318,
+          "fn": 818,
+          "total_cost": 23812
+        },
+        {
+          "threshold": 0.42,
+          "tp": 3412,
+          "fp": 7446,
+          "tn": 48324,
+          "fn": 818,
+          "total_cost": 23806
+        },
+        {
+          "threshold": 0.43,
+          "tp": 3412,
+          "fp": 7439,
+          "tn": 48331,
+          "fn": 818,
+          "total_cost": 23799
+        },
+        {
+          "threshold": 0.44,
+          "tp": 3411,
+          "fp": 7432,
+          "tn": 48338,
+          "fn": 819,
+          "total_cost": 23812
+        },
+        {
+          "threshold": 0.45,
+          "tp": 3410,
+          "fp": 7428,
+          "tn": 48342,
+          "fn": 820,
+          "total_cost": 23828
+        },
+        {
+          "threshold": 0.46,
+          "tp": 3410,
+          "fp": 7423,
+          "tn": 48347,
+          "fn": 820,
+          "total_cost": 23823
+        },
+        {
+          "threshold": 0.47,
+          "tp": 3410,
+          "fp": 7419,
+          "tn": 48351,
+          "fn": 820,
+          "total_cost": 23819
+        },
+        {
+          "threshold": 0.48,
+          "tp": 3410,
+          "fp": 7413,
+          "tn": 48357,
+          "fn": 820,
+          "total_cost": 23813
+        },
+        {
+          "threshold": 0.49,
+          "tp": 3410,
+          "fp": 7410,
+          "tn": 48360,
+          "fn": 820,
+          "total_cost": 23810
+        },
+        {
+          "threshold": 0.5,
+          "tp": 3410,
+          "fp": 7405,
+          "tn": 48365,
+          "fn": 820,
+          "total_cost": 23805
+        },
+        {
+          "threshold": 0.51,
+          "tp": 3410,
+          "fp": 7402,
+          "tn": 48368,
+          "fn": 820,
+          "total_cost": 23802
+        },
+        {
+          "threshold": 0.52,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 23800
+        },
+        {
+          "threshold": 0.53,
+          "tp": 3410,
+          "fp": 7400,
+          "tn": 48370,
+          "fn": 820,
+          "total_cost": 23800
+        },
+        {
+          "threshold": 0.54,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 23799
+        },
+        {
+          "threshold": 0.55,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 23799
+        },
+        {
+          "threshold": 0.56,
+          "tp": 3410,
+          "fp": 7399,
+          "tn": 48371,
+          "fn": 820,
+          "total_cost": 23799
+        },
+        {
+          "threshold": 0.57,
+          "tp": 3410,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 820,
+          "total_cost": 23797
+        },
+        {
+          "threshold": 0.58,
+          "tp": 3409,
+          "fp": 7397,
+          "tn": 48373,
+          "fn": 821,
+          "total_cost": 23817
+        },
+        {
+          "threshold": 0.59,
+          "tp": 3407,
+          "fp": 7396,
+          "tn": 48374,
+          "fn": 823,
+          "total_cost": 23856
+        },
+        {
+          "threshold": 0.6,
+          "tp": 3407,
+          "fp": 7392,
+          "tn": 48378,
+          "fn": 823,
+          "total_cost": 23852
+        },
+        {
+          "threshold": 0.61,
+          "tp": 3407,
+          "fp": 7391,
+          "tn": 48379,
+          "fn": 823,
+          "total_cost": 23851
+        },
+        {
+          "threshold": 0.62,
+          "tp": 3405,
+          "fp": 7388,
+          "tn": 48382,
+          "fn": 825,
+          "total_cost": 23888
+        },
+        {
+          "threshold": 0.63,
+          "tp": 3405,
+          "fp": 7383,
+          "tn": 48387,
+          "fn": 825,
+          "total_cost": 23883
+        },
+        {
+          "threshold": 0.64,
+          "tp": 3404,
+          "fp": 7376,
+          "tn": 48394,
+          "fn": 826,
+          "total_cost": 23896
+        },
+        {
+          "threshold": 0.65,
+          "tp": 3403,
+          "fp": 7368,
+          "tn": 48402,
+          "fn": 827,
+          "total_cost": 23908
+        },
+        {
+          "threshold": 0.66,
+          "tp": 3400,
+          "fp": 7357,
+          "tn": 48413,
+          "fn": 830,
+          "total_cost": 23957
+        },
+        {
+          "threshold": 0.67,
+          "tp": 3399,
+          "fp": 7338,
+          "tn": 48432,
+          "fn": 831,
+          "total_cost": 23958
+        },
+        {
+          "threshold": 0.68,
+          "tp": 3393,
+          "fp": 7318,
+          "tn": 48452,
+          "fn": 837,
+          "total_cost": 24058
+        },
+        {
+          "threshold": 0.69,
+          "tp": 3385,
+          "fp": 7288,
+          "tn": 48482,
+          "fn": 845,
+          "total_cost": 24188
+        },
+        {
+          "threshold": 0.7,
+          "tp": 3378,
+          "fp": 7248,
+          "tn": 48522,
+          "fn": 852,
+          "total_cost": 24288
+        },
+        {
+          "threshold": 0.71,
+          "tp": 3369,
+          "fp": 7194,
+          "tn": 48576,
+          "fn": 861,
+          "total_cost": 24414
+        },
+        {
+          "threshold": 0.72,
+          "tp": 3343,
+          "fp": 7133,
+          "tn": 48637,
+          "fn": 887,
+          "total_cost": 24873
+        },
+        {
+          "threshold": 0.73,
+          "tp": 3319,
+          "fp": 7029,
+          "tn": 48741,
+          "fn": 911,
+          "total_cost": 25249
+        },
+        {
+          "threshold": 0.74,
+          "tp": 3293,
+          "fp": 6896,
+          "tn": 48874,
+          "fn": 937,
+          "total_cost": 25636
+        },
+        {
+          "threshold": 0.75,
+          "tp": 3264,
+          "fp": 6743,
+          "tn": 49027,
+          "fn": 966,
+          "total_cost": 26063
+        },
+        {
+          "threshold": 0.76,
+          "tp": 3214,
+          "fp": 6568,
+          "tn": 49202,
+          "fn": 1016,
+          "total_cost": 26888
+        },
+        {
+          "threshold": 0.77,
+          "tp": 3147,
+          "fp": 6362,
+          "tn": 49408,
+          "fn": 1083,
+          "total_cost": 28022
+        },
+        {
+          "threshold": 0.78,
+          "tp": 3069,
+          "fp": 6118,
+          "tn": 49652,
+          "fn": 1161,
+          "total_cost": 29338
+        },
+        {
+          "threshold": 0.79,
+          "tp": 2994,
+          "fp": 5841,
+          "tn": 49929,
+          "fn": 1236,
+          "total_cost": 30561
+        },
+        {
+          "threshold": 0.8,
+          "tp": 2898,
+          "fp": 5535,
+          "tn": 50235,
+          "fn": 1332,
+          "total_cost": 32175
+        },
+        {
+          "threshold": 0.81,
+          "tp": 2802,
+          "fp": 5252,
+          "tn": 50518,
+          "fn": 1428,
+          "total_cost": 33812
+        },
+        {
+          "threshold": 0.82,
+          "tp": 2704,
+          "fp": 4968,
+          "tn": 50802,
+          "fn": 1526,
+          "total_cost": 35488
+        },
+        {
+          "threshold": 0.83,
+          "tp": 2624,
+          "fp": 4678,
+          "tn": 51092,
+          "fn": 1606,
+          "total_cost": 36798
+        },
+        {
+          "threshold": 0.84,
+          "tp": 2556,
+          "fp": 4416,
+          "tn": 51354,
+          "fn": 1674,
+          "total_cost": 37896
+        },
+        {
+          "threshold": 0.85,
+          "tp": 2464,
+          "fp": 4134,
+          "tn": 51636,
+          "fn": 1766,
+          "total_cost": 39454
+        },
+        {
+          "threshold": 0.86,
+          "tp": 2370,
+          "fp": 3895,
+          "tn": 51875,
+          "fn": 1860,
+          "total_cost": 41095
+        },
+        {
+          "threshold": 0.87,
+          "tp": 2295,
+          "fp": 3656,
+          "tn": 52114,
+          "fn": 1935,
+          "total_cost": 42356
+        },
+        {
+          "threshold": 0.88,
+          "tp": 2196,
+          "fp": 3391,
+          "tn": 52379,
+          "fn": 2034,
+          "total_cost": 44071
+        },
+        {
+          "threshold": 0.89,
+          "tp": 2087,
+          "fp": 3152,
+          "tn": 52618,
+          "fn": 2143,
+          "total_cost": 46012
+        },
+        {
+          "threshold": 0.9,
+          "tp": 1955,
+          "fp": 2882,
+          "tn": 52888,
+          "fn": 2275,
+          "total_cost": 48382
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "selected_model": "Random Forest",
+  "selected_threshold": 0.11000000000000001,
+  "threshold_selection": {
+    "method": "validation_cost_minimization",
+    "validation_size": 0.2,
+    "random_state": 42,
+    "operational_fn_fp_ratio": 10,
+    "tested_fn_fp_ratios": [
+      1,
+      2,
+      5,
+      10,
+      20
+    ],
+    "threshold_range": {
+      "start": 0.05,
+      "end": 0.9500000000000002,
+      "step": 0.01
+    },
+    "test_set_used_for_selection": false
+  },
+  "final_test_metrics": {
+    "precision": 0.2707415286430634,
+    "recall": 0.48259750812567714,
+    "f1": 0.34688017132288523,
+    "roc_auc": 0.792460856838696,
+    "tp": 7127,
+    "fp": 19197,
+    "tn": 260626,
+    "fn": 7641,
+    "fpr": 0.06860408186603674
+  },
+  "feature_cols": [
+    "Transaction Amount",
+    "Quantity",
+    "Customer Age",
+    "Account Age Days",
+    "Transaction Hour",
+    "transaction_day_of_week",
+    "transaction_day_of_month",
+    "transaction_month",
+    "customer_location_freq",
+    "Payment Method_PayPal",
+    "Payment Method_bank transfer",
+    "Payment Method_credit card",
+    "Payment Method_debit card",
+    "Product Category_clothing",
+    "Product Category_electronics",
+    "Product Category_health & beauty",
+    "Product Category_home & garden",
+    "Product Category_toys & games",
+    "Device Used_desktop",
+    "Device Used_mobile",
+    "Device Used_tablet"
+  ],
+  "feature_count": 21,
+  "data_contract": {
+    "train_file": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\data\\processed_train.csv",
+    "test_file": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\data\\processed_test.csv"
+  },
+  "note": "Cost ratios are modeling assumptions, not claimed real-world Razorpay monetary costs. Threshold was selected using validation data only; final metrics were measured once on the untouched test set."
+}

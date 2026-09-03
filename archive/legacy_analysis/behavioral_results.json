@@ -1,0 +1,62 @@
+{
+  "data_path": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\Data\\behavioral\\behavioral_transactions.csv",
+  "train_rows": 240000,
+  "test_rows": 60000,
+  "target_column": "is_fraud",
+  "excluded_columns": [
+    "billing_address_id",
+    "customer_id",
+    "device_id",
+    "ip_id",
+    "merchant_id",
+    "scenario_type",
+    "shipping_address_id",
+    "transaction_id"
+  ],
+  "metrics": {
+    "Logistic Regression": {
+      "model": "Logistic Regression",
+      "precision": 0.08827920865994775,
+      "recall": 0.48216106014271154,
+      "f1": 0.1492348950938634,
+      "roc_auc": 0.8132192575244735,
+      "fp": 4885,
+      "fn": 508,
+      "fpr": 0.08276995543807926,
+      "tp": 473,
+      "tn": 54134,
+      "confusion_matrix": [
+        [
+          54134,
+          4885
+        ],
+        [
+          508,
+          473
+        ]
+      ]
+    },
+    "Random Forest": {
+      "model": "Random Forest",
+      "precision": 0.9550898203592815,
+      "recall": 0.3251783893985729,
+      "f1": 0.48517110266159696,
+      "roc_auc": 0.980350338638161,
+      "fp": 15,
+      "fn": 662,
+      "fpr": 0.00025415544146800185,
+      "tp": 319,
+      "tn": 59004,
+      "confusion_matrix": [
+        [
+          59004,
+          15
+        ],
+        [
+          662,
+          319
+        ]
+      ]
+    }
+  }
+}

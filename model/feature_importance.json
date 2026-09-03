@@ -1,0 +1,130 @@
+{
+  "feature_importances": [
+    {
+      "feature": "Account Age Days",
+      "importance": 0.2470702929041241,
+      "percentage": 24.70702929041241,
+      "rank": 1
+    },
+    {
+      "feature": "Transaction Amount",
+      "importance": 0.19254521837662789,
+      "percentage": 19.25452183766279,
+      "rank": 2
+    },
+    {
+      "feature": "Transaction Hour",
+      "importance": 0.13181854052117148,
+      "percentage": 13.181854052117147,
+      "rank": 3
+    },
+    {
+      "feature": "customer_location_freq",
+      "importance": 0.0944819623947883,
+      "percentage": 9.44819623947883,
+      "rank": 4
+    },
+    {
+      "feature": "Customer Age",
+      "importance": 0.08313721780202461,
+      "percentage": 8.313721780202462,
+      "rank": 5
+    },
+    {
+      "feature": "transaction_day_of_month",
+      "importance": 0.06502305594811336,
+      "percentage": 6.502305594811336,
+      "rank": 6
+    },
+    {
+      "feature": "transaction_day_of_week",
+      "importance": 0.03828872007978032,
+      "percentage": 3.828872007978032,
+      "rank": 7
+    },
+    {
+      "feature": "Quantity",
+      "importance": 0.03287698261396946,
+      "percentage": 3.2876982613969457,
+      "rank": 8
+    },
+    {
+      "feature": "transaction_month",
+      "importance": 0.022090821819378062,
+      "percentage": 2.209082181937806,
+      "rank": 9
+    },
+    {
+      "feature": "Payment Method_debit card",
+      "importance": 0.008120462293353375,
+      "percentage": 0.8120462293353374,
+      "rank": 10
+    },
+    {
+      "feature": "Payment Method_PayPal",
+      "importance": 0.008097280521050621,
+      "percentage": 0.8097280521050622,
+      "rank": 11
+    },
+    {
+      "feature": "Payment Method_bank transfer",
+      "importance": 0.008049544889473893,
+      "percentage": 0.8049544889473893,
+      "rank": 12
+    },
+    {
+      "feature": "Payment Method_credit card",
+      "importance": 0.0077999659299613725,
+      "percentage": 0.7799965929961372,
+      "rank": 13
+    },
+    {
+      "feature": "Product Category_toys & games",
+      "importance": 0.007767236891439354,
+      "percentage": 0.7767236891439354,
+      "rank": 14
+    },
+    {
+      "feature": "Device Used_tablet",
+      "importance": 0.0076964785449029505,
+      "percentage": 0.769647854490295,
+      "rank": 15
+    },
+    {
+      "feature": "Product Category_home & garden",
+      "importance": 0.007632912522482158,
+      "percentage": 0.7632912522482158,
+      "rank": 16
+    },
+    {
+      "feature": "Product Category_clothing",
+      "importance": 0.0076133795606395695,
+      "percentage": 0.7613379560639569,
+      "rank": 17
+    },
+    {
+      "feature": "Product Category_health & beauty",
+      "importance": 0.007599315919756946,
+      "percentage": 0.7599315919756946,
+      "rank": 18
+    },
+    {
+      "feature": "Device Used_desktop",
+      "importance": 0.007572442654393778,
+      "percentage": 0.7572442654393778,
+      "rank": 19
+    },
+    {
+      "feature": "Device Used_mobile",
+      "importance": 0.007414672948953553,
+      "percentage": 0.7414672948953552,
+      "rank": 20
+    },
+    {
+      "feature": "Product Category_electronics",
+      "importance": 0.00730349486361494,
+      "percentage": 0.730349486361494,
+      "rank": 21
+    }
+  ]
+}

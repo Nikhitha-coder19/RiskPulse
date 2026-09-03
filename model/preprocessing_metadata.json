@@ -1,0 +1,59 @@
+{
+  "feature_cols": [
+    "Transaction Amount",
+    "Quantity",
+    "Customer Age",
+    "Account Age Days",
+    "Transaction Hour",
+    "transaction_day_of_week",
+    "transaction_day_of_month",
+    "transaction_month",
+    "customer_location_freq",
+    "Payment Method_PayPal",
+    "Payment Method_bank transfer",
+    "Payment Method_credit card",
+    "Payment Method_debit card",
+    "Product Category_clothing",
+    "Product Category_electronics",
+    "Product Category_health & beauty",
+    "Product Category_home & garden",
+    "Product Category_toys & games",
+    "Device Used_desktop",
+    "Device Used_mobile",
+    "Device Used_tablet"
+  ],
+  "onehot_prefixes": {
+    "Payment Method": [
+      "Payment Method_PayPal",
+      "Payment Method_bank transfer",
+      "Payment Method_credit card",
+      "Payment Method_debit card"
+    ],
+    "Product Category": [
+      "Product Category_clothing",
+      "Product Category_electronics",
+      "Product Category_health & beauty",
+      "Product Category_home & garden",
+      "Product Category_toys & games"
+    ],
+    "Device Used": [
+      "Device Used_desktop",
+      "Device Used_mobile",
+      "Device Used_tablet"
+    ]
+  },
+  "numeric_features": [
+    "Transaction Amount",
+    "Quantity",
+    "Customer Age",
+    "Account Age Days",
+    "Transaction Hour",
+    "transaction_day_of_week",
+    "transaction_day_of_month",
+    "transaction_month",
+    "customer_location_freq"
+  ],
+  "customer_location_freq_map_sample_size": 0,
+  "customer_location_freq_map_used_persisted": true,
+  "customer_location_freq_map_path": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\model\\customer_location_freq_map.json"
+}

@@ -1,0 +1,34 @@
+{
+  "model": "merchant_logistic_regression",
+  "dataset_rows": 300000,
+  "fraud_rate": 0.07073666666666667,
+  "train_rows": 192000,
+  "validation_rows": 48000,
+  "final_test_rows": 60000,
+  "threshold": 0.27,
+  "cost_policy": {
+    "fn_cost": 10,
+    "fp_cost": 1,
+    "description": "Relative sensitivity-analysis weights. They are not claimed real-world monetary values."
+  },
+  "validation_selection": {
+    "threshold": 0.27,
+    "total_cost": 12540,
+    "fp": 6320,
+    "fn": 622,
+    "tp": 2740,
+    "tn": 38318
+  },
+  "final_test_metrics": {
+    "threshold": 0.27,
+    "precision": 0.30828344205164865,
+    "recall": 0.8156028368794326,
+    "f1": 0.4474418001426626,
+    "roc_auc": 0.8711101403900094,
+    "tp": 3450,
+    "fp": 7741,
+    "tn": 48029,
+    "fn": 780,
+    "fpr": 0.13880222341760803
+  }
+}

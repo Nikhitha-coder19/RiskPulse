@@ -1,0 +1,497 @@
+{
+  "class_distribution": {
+    "train": {
+      "total": 1178361,
+      "counts": {
+        "0": 1119291,
+        "1": 59070
+      }
+    },
+    "test": {
+      "total": 294591,
+      "counts": {
+        "0": 279823,
+        "1": 14768
+      }
+    }
+  },
+  "numeric_feature_stats_by_label": {
+    "Transaction Amount": {
+      "legit": {
+        "mean": 209.48863603063364,
+        "median": 148.61,
+        "min": 10.0,
+        "max": 2921.67
+      },
+      "fraud": {
+        "mean": 547.8709087215601,
+        "median": 257.42499999999995,
+        "min": 10.02,
+        "max": 9990.9
+      },
+      "t_stat": -53.0058982889754,
+      "p_value": 0.0
+    },
+    "Quantity": {
+      "legit": {
+        "mean": 3.0029054080615247,
+        "median": 3.0,
+        "min": 1.0,
+        "max": 5.0
+      },
+      "fraud": {
+        "mean": 2.9939734561213434,
+        "median": 3.0,
+        "min": 1.0,
+        "max": 5.0
+      },
+      "t_stat": 0.747819833590107,
+      "p_value": 0.45457958261197834
+    },
+    "Customer Age": {
+      "legit": {
+        "mean": 34.50644871936903,
+        "median": 34.0,
+        "min": -11.0,
+        "max": 86.0
+      },
+      "fraud": {
+        "mean": 34.50067713976165,
+        "median": 35.0,
+        "min": -3.0,
+        "max": 75.0
+      },
+      "t_stat": 0.06774455899625653,
+      "p_value": 0.9459898071573388
+    },
+    "Account Age Days": {
+      "legit": {
+        "mean": 182.9993067045954,
+        "median": 183.0,
+        "min": 1.0,
+        "max": 365.0
+      },
+      "fraud": {
+        "mean": 115.95212621885157,
+        "median": 60.0,
+        "min": 1.0,
+        "max": 365.0
+      },
+      "t_stat": 68.62750605436324,
+      "p_value": 0.0
+    },
+    "Transaction Hour": {
+      "legit": {
+        "mean": 11.468535467063107,
+        "median": 11.0,
+        "min": 0.0,
+        "max": 23.0
+      },
+      "fraud": {
+        "mean": 7.90161159263272,
+        "median": 5.0,
+        "min": 0.0,
+        "max": 23.0
+      },
+      "t_stat": 60.44477815290634,
+      "p_value": 0.0
+    },
+    "transaction_day_of_week": {
+      "legit": {
+        "mean": 2.9465269116548676,
+        "median": 3.0,
+        "min": 0.0,
+        "max": 6.0
+      },
+      "fraud": {
+        "mean": 2.948537378114843,
+        "median": 3.0,
+        "min": 0.0,
+        "max": 6.0
+      },
+      "t_stat": -0.11828037175540387,
+      "p_value": 0.9058469620461318
+    },
+    "transaction_day_of_month": {
+      "legit": {
+        "mean": 15.32539855551545,
+        "median": 15.0,
+        "min": 1.0,
+        "max": 31.0
+      },
+      "fraud": {
+        "mean": 15.28703954496208,
+        "median": 15.0,
+        "min": 1.0,
+        "max": 31.0
+      },
+      "t_stat": 0.5094863076154901,
+      "p_value": 0.6104182611306698
+    },
+    "transaction_month": {
+      "legit": {
+        "mean": 2.04898811034118,
+        "median": 2.0,
+        "min": 1.0,
+        "max": 4.0
+      },
+      "fraud": {
+        "mean": 2.048144637053088,
+        "median": 2.0,
+        "min": 1.0,
+        "max": 4.0
+      },
+      "t_stat": 0.11437041440428575,
+      "p_value": 0.9089455696133149
+    },
+    "customer_location_freq": {
+      "legit": {
+        "mean": 8.04802383353299e-05,
+        "median": 2.970227290278616e-05,
+        "min": 0.0,
+        "max": 0.0008732468233419
+      },
+      "fraud": {
+        "mean": 8.090754787786115e-05,
+        "median": 3.0550909271437194e-05,
+        "min": 0.0,
+        "max": 0.0008732468233419
+      },
+      "t_stat": -0.41640518818193234,
+      "p_value": 0.6771189962096164
+    }
+  },
+  "binned_rates": {
+    "Account Age Days": [
+      {
+        "account_age_bin": "0-7d",
+        "count": 6943,
+        "sum": 1600,
+        "fraud_rate": 0.230448
+      },
+      {
+        "account_age_bin": "8-30d",
+        "count": 22642,
+        "sum": 5043,
+        "fraud_rate": 0.222728
+      },
+      {
+        "account_age_bin": "31-90d",
+        "count": 47465,
+        "sum": 1466,
+        "fraud_rate": 0.030886
+      },
+      {
+        "account_age_bin": "91-180d",
+        "count": 71118,
+        "sum": 2192,
+        "fraud_rate": 0.030822
+      },
+      {
+        "account_age_bin": "181-365d",
+        "count": 146423,
+        "sum": 4467,
+        "fraud_rate": 0.030508
+      },
+      {
+        "account_age_bin": ">365d",
+        "count": 0,
+        "sum": 0,
+        "fraud_rate": 0.0
+      }
+    ],
+    "Transaction Amount": [
+      {
+        "amount_bin": "0-50",
+        "count": 52385,
+        "sum": 1619,
+        "fraud_rate": 0.030906
+      },
+      {
+        "amount_bin": "51-100",
+        "count": 52559,
+        "sum": 1884,
+        "fraud_rate": 0.035845
+      },
+      {
+        "amount_bin": "101-200",
+        "count": 73115,
+        "sum": 2757,
+        "fraud_rate": 0.037708
+      },
+      {
+        "amount_bin": "201-500",
+        "count": 87979,
+        "sum": 3974,
+        "fraud_rate": 0.04517
+      },
+      {
+        "amount_bin": "501-1000",
+        "count": 24253,
+        "sum": 2160,
+        "fraud_rate": 0.089061
+      },
+      {
+        "amount_bin": "1001-5000",
+        "count": 4254,
+        "sum": 2328,
+        "fraud_rate": 0.54725
+      },
+      {
+        "amount_bin": "5001+",
+        "count": 46,
+        "sum": 46,
+        "fraud_rate": 1.0
+      }
+    ],
+    "Transaction Hour": {
+      "hourly": [
+        {
+          "Transaction Hour": 0,
+          "count": 13304,
+          "sum": 1350,
+          "fraud_rate": 0.101473
+        },
+        {
+          "Transaction Hour": 1,
+          "count": 12999,
+          "sum": 1325,
+          "fraud_rate": 0.101931
+        },
+        {
+          "Transaction Hour": 2,
+          "count": 13074,
+          "sum": 1375,
+          "fraud_rate": 0.105171
+        },
+        {
+          "Transaction Hour": 3,
+          "count": 13220,
+          "sum": 1338,
+          "fraud_rate": 0.10121
+        },
+        {
+          "Transaction Hour": 4,
+          "count": 13098,
+          "sum": 1322,
+          "fraud_rate": 0.100931
+        },
+        {
+          "Transaction Hour": 5,
+          "count": 13183,
+          "sum": 1391,
+          "fraud_rate": 0.105515
+        },
+        {
+          "Transaction Hour": 6,
+          "count": 11944,
+          "sum": 352,
+          "fraud_rate": 0.029471
+        },
+        {
+          "Transaction Hour": 7,
+          "count": 12026,
+          "sum": 365,
+          "fraud_rate": 0.030351
+        },
+        {
+          "Transaction Hour": 8,
+          "count": 11851,
+          "sum": 386,
+          "fraud_rate": 0.032571
+        },
+        {
+          "Transaction Hour": 9,
+          "count": 11906,
+          "sum": 375,
+          "fraud_rate": 0.031497
+        },
+        {
+          "Transaction Hour": 10,
+          "count": 11953,
+          "sum": 356,
+          "fraud_rate": 0.029783
+        },
+        {
+          "Transaction Hour": 11,
+          "count": 11979,
+          "sum": 381,
+          "fraud_rate": 0.031806
+        },
+        {
+          "Transaction Hour": 12,
+          "count": 12144,
+          "sum": 392,
+          "fraud_rate": 0.032279
+        },
+        {
+          "Transaction Hour": 13,
+          "count": 12118,
+          "sum": 404,
+          "fraud_rate": 0.033339
+        },
+        {
+          "Transaction Hour": 14,
+          "count": 11994,
+          "sum": 380,
+          "fraud_rate": 0.031683
+        },
+        {
+          "Transaction Hour": 15,
+          "count": 11965,
+          "sum": 366,
+          "fraud_rate": 0.030589
+        },
+        {
+          "Transaction Hour": 16,
+          "count": 11801,
+          "sum": 340,
+          "fraud_rate": 0.028811
+        },
+        {
+          "Transaction Hour": 17,
+          "count": 12132,
+          "sum": 385,
+          "fraud_rate": 0.031734
+        },
+        {
+          "Transaction Hour": 18,
+          "count": 12050,
+          "sum": 388,
+          "fraud_rate": 0.032199
+        },
+        {
+          "Transaction Hour": 19,
+          "count": 11817,
+          "sum": 364,
+          "fraud_rate": 0.030803
+        },
+        {
+          "Transaction Hour": 20,
+          "count": 12011,
+          "sum": 336,
+          "fraud_rate": 0.027974
+        },
+        {
+          "Transaction Hour": 21,
+          "count": 12058,
+          "sum": 382,
+          "fraud_rate": 0.03168
+        },
+        {
+          "Transaction Hour": 22,
+          "count": 12116,
+          "sum": 360,
+          "fraud_rate": 0.029713
+        },
+        {
+          "Transaction Hour": 23,
+          "count": 11848,
+          "sum": 355,
+          "fraud_rate": 0.029963
+        }
+      ],
+      "periods": [
+        {
+          "hour_period": "night(0-5)",
+          "count": 78878,
+          "sum": 8101,
+          "fraud_rate": 0.102703
+        },
+        {
+          "hour_period": "morning(6-11)",
+          "count": 71659,
+          "sum": 2215,
+          "fraud_rate": 0.03091
+        },
+        {
+          "hour_period": "afternoon(12-17)",
+          "count": 72154,
+          "sum": 2267,
+          "fraud_rate": 0.031419
+        },
+        {
+          "hour_period": "evening(18-23)",
+          "count": 71900,
+          "sum": 2185,
+          "fraud_rate": 0.030389
+        }
+      ]
+    }
+  },
+  "deterministic_flags": [],
+  "distribution_differences": {
+    "numeric": {
+      "Transaction Amount": {
+        "mean_train": 226.84740792507557,
+        "mean_test": 226.45191529951697,
+        "smd": 0.0014626469216715468,
+        "ks_stat": 0.0019754252268572303,
+        "ks_pvalue": 0.3161587058525701
+      },
+      "Quantity": {
+        "mean_train": 2.9996732749980692,
+        "mean_test": 3.0024576446666735,
+        "smd": -0.0019681188955626783,
+        "ks_stat": 0.0008875024313367286,
+        "ks_pvalue": 0.9923672443021954
+      },
+      "Customer Age": {
+        "mean_train": 34.513561633489225,
+        "mean_test": 34.50615938708243,
+        "smd": 0.000739992483130176,
+        "ks_stat": 0.0010280204686605732,
+        "ks_pvalue": 0.9643230871869453
+      },
+      "Account Age Days": {
+        "mean_train": 179.64844814110447,
+        "mean_test": 179.63819668625314,
+        "smd": 9.592968616684614e-05,
+        "ks_stat": 0.000810612140936473,
+        "ks_pvalue": 0.9977617728094397
+      },
+      "Transaction Hour": {
+        "mean_train": 11.286273900782527,
+        "mean_test": 11.28972371864721,
+        "smd": -0.0004945268195743573,
+        "ks_stat": 0.0010137241559874388,
+        "ks_pvalue": 0.9685596046996636
+      },
+      "transaction_day_of_week": {
+        "mean_train": 2.946348360137513,
+        "mean_test": 2.9466276973838306,
+        "smd": -0.0001390110927959033,
+        "ks_stat": 0.00110907910824809,
+        "ks_pvalue": 0.9336556691795881
+      },
+      "transaction_day_of_month": {
+        "mean_train": 15.33403939879205,
+        "mean_test": 15.32347559837198,
+        "smd": 0.001181845935067145,
+        "ks_stat": 0.0017710164955734298,
+        "ks_pvalue": 0.45010063354809826
+      },
+      "transaction_month": {
+        "mean_train": 2.0504573725708846,
+        "mean_test": 2.0489458265866913,
+        "smd": 0.0017319569423765607,
+        "ks_stat": 0.001050670314679314,
+        "ks_pvalue": 0.9568985702857753
+      },
+      "customer_location_freq": {
+        "mean_train": 8.124755352622475e-05,
+        "mean_test": 8.050165958487282e-05,
+        "smd": 0.006157295493721599,
+        "ks_stat": 0.023538294907347976,
+        "ks_pvalue": 7.318162864252844e-114
+      }
+    },
+    "categorical": {}
+  },
+  "leakage_checks": [],
+  "limitations": [
+    "Dataset is synthetic; patterns may not reflect real-world behavior.",
+    "Feature importances and separations indicate model reliance, not causation.",
+    "Binning choices are heuristic and for exploratory checks only."
+  ]
+}

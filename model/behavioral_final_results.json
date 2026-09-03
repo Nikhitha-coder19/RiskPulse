@@ -1,0 +1,202 @@
+{
+  "data_path": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\Data\\behavioral\\behavioral_transactions.csv",
+  "train_rows": 192000,
+  "validation_rows": 48000,
+  "final_test_rows": 60000,
+  "target_column": "is_fraud",
+  "excluded_columns": [
+    "billing_address_id",
+    "customer_id",
+    "device_id",
+    "ip_id",
+    "merchant_id",
+    "scenario_type",
+    "shipping_address_id",
+    "transaction_id"
+  ],
+  "feature_count": 26,
+  "features": [
+    "transaction_amount",
+    "quantity",
+    "customer_age",
+    "account_age_days",
+    "customer_transaction_count_before",
+    "customer_avg_amount_before",
+    "customer_max_amount_before",
+    "customer_amount_deviation",
+    "customer_transactions_last_24h",
+    "customer_transactions_last_7d",
+    "merchant_transaction_count_before",
+    "merchant_avg_amount_before",
+    "merchant_transactions_last_24h",
+    "device_transaction_count_before",
+    "ip_transaction_count_before",
+    "ip_unique_customers_before",
+    "ip_unique_merchants_before",
+    "hours_since_customer_previous_transaction",
+    "shipping_address_transaction_count_before",
+    "billing_address_transaction_count_before",
+    "shipping_address_unique_customers_before",
+    "billing_address_unique_customers_before",
+    "shipping_address_unique_merchants_before",
+    "billing_address_unique_merchants_before",
+    "shipping_address_transactions_last_24h",
+    "billing_address_transactions_last_24h"
+  ],
+  "split": {
+    "train_fraction": 0.64,
+    "validation_fraction": 0.16,
+    "final_test_fraction": 0.2,
+    "method": "chronological"
+  },
+  "selected_model": "Random Forest",
+  "selected_threshold": 0.17000000000000004,
+  "metrics": {
+    "Logistic Regression": {
+      "model": "Logistic Regression",
+      "threshold": 0.6900000000000002,
+      "precision": 0.20829268292682926,
+      "recall": 0.4066666666666667,
+      "f1": 0.27548387096774196,
+      "roc_auc": 0.836703744093057,
+      "fp": 1623,
+      "fn": 623,
+      "fpr": 0.027531806615776082,
+      "tp": 427,
+      "tn": 57327,
+      "confusion_matrix": [
+        [
+          57327,
+          1623
+        ],
+        [
+          623,
+          427
+        ]
+      ]
+    },
+    "Random Forest": {
+      "model": "Random Forest",
+      "threshold": 0.17000000000000004,
+      "precision": 0.3947876447876448,
+      "recall": 0.7790476190476191,
+      "f1": 0.5240230621396541,
+      "roc_auc": 0.9793860172058645,
+      "fp": 1254,
+      "fn": 232,
+      "fpr": 0.02127226463104326,
+      "tp": 818,
+      "tn": 57696,
+      "confusion_matrix": [
+        [
+          57696,
+          1254
+        ],
+        [
+          232,
+          818
+        ]
+      ]
+    }
+  },
+  "threshold_selection": {
+    "Logistic Regression": {
+      "selected_cost_ratio": "10:1",
+      "selected_threshold": 0.6900000000000002,
+      "selected_cost": 7946,
+      "selected_fp": 1616,
+      "selected_fn": 633,
+      "cost_analysis": {
+        "fn_fp_1_to_1": {
+          "threshold": 0.9400000000000002,
+          "cost": 1092,
+          "fp": 130,
+          "fn": 962,
+          "tp": 725,
+          "tn": 46183
+        },
+        "fn_fp_2_to_1": {
+          "threshold": 0.9100000000000003,
+          "cost": 2028,
+          "fp": 228,
+          "fn": 900,
+          "tp": 787,
+          "tn": 46085
+        },
+        "fn_fp_5_to_1": {
+          "threshold": 0.8500000000000002,
+          "cost": 4555,
+          "fp": 520,
+          "fn": 807,
+          "tp": 880,
+          "tn": 45793
+        },
+        "fn_fp_10_to_1": {
+          "threshold": 0.6900000000000002,
+          "cost": 7946,
+          "fp": 1616,
+          "fn": 633,
+          "tp": 1054,
+          "tn": 44697
+        },
+        "fn_fp_20_to_1": {
+          "threshold": 0.5400000000000001,
+          "cost": 13834,
+          "fp": 3174,
+          "fn": 533,
+          "tp": 1154,
+          "tn": 43139
+        }
+      }
+    },
+    "Random Forest": {
+      "selected_cost_ratio": "10:1",
+      "selected_threshold": 0.17000000000000004,
+      "selected_cost": 3629,
+      "selected_fp": 999,
+      "selected_fn": 263,
+      "cost_analysis": {
+        "fn_fp_1_to_1": {
+          "threshold": 0.32000000000000006,
+          "cost": 717,
+          "fp": 169,
+          "fn": 548,
+          "tp": 1139,
+          "tn": 46144
+        },
+        "fn_fp_2_to_1": {
+          "threshold": 0.26000000000000006,
+          "cost": 1214,
+          "fp": 330,
+          "fn": 442,
+          "tp": 1245,
+          "tn": 45983
+        },
+        "fn_fp_5_to_1": {
+          "threshold": 0.19,
+          "cost": 2307,
+          "fp": 807,
+          "fn": 300,
+          "tp": 1387,
+          "tn": 45506
+        },
+        "fn_fp_10_to_1": {
+          "threshold": 0.17000000000000004,
+          "cost": 3629,
+          "fp": 999,
+          "fn": 263,
+          "tp": 1424,
+          "tn": 45314
+        },
+        "fn_fp_20_to_1": {
+          "threshold": 0.12000000000000001,
+          "cost": 5516,
+          "fp": 1996,
+          "fn": 176,
+          "tp": 1511,
+          "tn": 44317
+        }
+      }
+    }
+  }
+}

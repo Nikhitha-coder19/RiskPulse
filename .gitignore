@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Large datasets
+*.csv
+*.zip
+
+# Trained model binaries
+*.pkl
+
+# Runtime database
+*.db
+
+# Secrets / environment files
+.env
+.env.*
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

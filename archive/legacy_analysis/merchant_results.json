@@ -1,0 +1,82 @@
+{
+  "data_path": "C:\\Users\\ssnai\\OneDrive\\Desktop\\Projects\\RiskPulse\\Data\\merchant\\merchant_transactions.csv",
+  "train_rows": 240000,
+  "test_rows": 60000,
+  "target_column": "is_fraud",
+  "feature_columns": [
+    "transaction_amount",
+    "merchant_transaction_count_before",
+    "merchant_avg_amount_before",
+    "merchant_previous_amount",
+    "merchant_unique_customers_before",
+    "merchant_unique_ips_before",
+    "merchant_unique_devices_before",
+    "merchant_transactions_last_24h",
+    "seconds_since_merchant_previous",
+    "ip_unique_merchants_before",
+    "ip_unique_customers_before",
+    "merchant_fraud_count_before",
+    "merchant_fraud_rate_before",
+    "is_new_merchant",
+    "merchant_history_available",
+    "amount_deviation_ratio",
+    "high_amount_deviation",
+    "high_velocity",
+    "merchant_high_historical_fraud"
+  ],
+  "excluded_columns": [
+    "customer_id",
+    "device_id",
+    "ip_id",
+    "merchant_id",
+    "merchant_scenario",
+    "timestamp",
+    "transaction_id"
+  ],
+  "metrics": {
+    "Logistic Regression": {
+      "model": "Logistic Regression",
+      "precision": 0.3153028201571891,
+      "recall": 0.806146572104019,
+      "f1": 0.4533067464273845,
+      "roc_auc": 0.8692681949801424,
+      "fp": 7405,
+      "fn": 820,
+      "fpr": 0.13277747893132508,
+      "tp": 3410,
+      "tn": 48365,
+      "confusion_matrix": [
+        [
+          48365,
+          7405
+        ],
+        [
+          820,
+          3410
+        ]
+      ]
+    },
+    "Random Forest": {
+      "model": "Random Forest",
+      "precision": 0.44776119402985076,
+      "recall": 0.0425531914893617,
+      "f1": 0.07772020725388601,
+      "roc_auc": 0.8771769777170759,
+      "fp": 222,
+      "fn": 4050,
+      "fpr": 0.003980634749865519,
+      "tp": 180,
+      "tn": 55548,
+      "confusion_matrix": [
+        [
+          55548,
+          222
+        ],
+        [
+          4050,
+          180
+        ]
+      ]
+    }
+  }
+}

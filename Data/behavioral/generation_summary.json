@@ -1,0 +1,49 @@
+{
+  "row_count": 300000,
+  "fraud_rate": 0.07,
+  "scenario_counts": {
+    "coordinated_fraud": 7000,
+    "individual_fraud": 7000,
+    "legitimate_high_value": 12000,
+    "new_customer": 5000,
+    "normal": 262000,
+    "suspicious_merchant": 7000
+  },
+  "number_of_customers": 27000,
+  "number_of_merchants": 2500,
+  "number_of_devices": 46844,
+  "number_of_ips": 12707,
+  "transaction_amount_stats": {
+    "min": 15.0,
+    "p01": 15.0,
+    "p05": 15.0,
+    "p25": 73.61,
+    "median": 185.64,
+    "p75": 337.73,
+    "p95": 795.6304999999999,
+    "p99": 1107.4506000000006,
+    "max": 5000.0,
+    "mean": 252.7966351666667
+  },
+  "seed": 42,
+  "validation": {
+    "timestamp_monotonic": true,
+    "customer_history_match_rate": 1.0,
+    "first_transaction_zero_history": true,
+    "no_future_leakage": true,
+    "fraud_rate": 0.07,
+    "number_of_customers": 27000,
+    "number_of_merchants": 2500,
+    "repeated_customer_count": 273000,
+    "repeated_ip_count": 287293,
+    "repeated_device_count": 253156,
+    "scenario_distribution": {
+      "coordinated_fraud": 7000,
+      "individual_fraud": 7000,
+      "legitimate_high_value": 12000,
+      "new_customer": 5000,
+      "normal": 262000,
+      "suspicious_merchant": 7000
+    }
+  }
+}

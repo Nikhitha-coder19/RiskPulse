@@ -1,0 +1,123 @@
+{
+  "assumptions": {
+    "FALSE_POSITIVE_COST": 50,
+    "FRAUD_LOSS_PER_TRANSACTION": 1000,
+    "note": "These are MODELING ASSUMPTIONS / ILLUSTRATIVE ESTIMATES only."
+  },
+  "total_legit": 279823,
+  "total_fraud": 14768,
+  "thresholds": {
+    "0.1": {
+      "precision": 0.22912,
+      "recall": 0.528304,
+      "f1": 0.319623,
+      "tp": 7802,
+      "fp": 26250,
+      "fn": 6966,
+      "fpr": 0.093809301,
+      "fp_cost": 1312500,
+      "fn_exposure": 6966000,
+      "total_exposure": 8278500
+    },
+    "0.15": {
+      "precision": 0.329268,
+      "recall": 0.431406,
+      "f1": 0.373479,
+      "tp": 6371,
+      "fp": 12978,
+      "fn": 8397,
+      "fpr": 0.046379318,
+      "fp_cost": 648900,
+      "fn_exposure": 8397000,
+      "total_exposure": 9045900
+    },
+    "0.2": {
+      "precision": 0.402084,
+      "recall": 0.376219,
+      "f1": 0.388722,
+      "tp": 5556,
+      "fp": 8262,
+      "fn": 9212,
+      "fpr": 0.029525807,
+      "fp_cost": 413100,
+      "fn_exposure": 9212000,
+      "total_exposure": 9625100
+    },
+    "0.25": {
+      "precision": 0.449878,
+      "recall": 0.325772,
+      "f1": 0.377896,
+      "tp": 4811,
+      "fp": 5883,
+      "fn": 9957,
+      "fpr": 0.021024004,
+      "fp_cost": 294150,
+      "fn_exposure": 9957000,
+      "total_exposure": 10251150
+    },
+    "0.3": {
+      "precision": 0.501575,
+      "recall": 0.269502,
+      "f1": 0.350614,
+      "tp": 3980,
+      "fp": 3955,
+      "fn": 10788,
+      "fpr": 0.014133935,
+      "fp_cost": 197750,
+      "fn_exposure": 10788000,
+      "total_exposure": 10985750
+    },
+    "0.35": {
+      "precision": 0.575009,
+      "recall": 0.219055,
+      "f1": 0.31725,
+      "tp": 3235,
+      "fp": 2391,
+      "fn": 11533,
+      "fpr": 0.008544687,
+      "fp_cost": 119550,
+      "fn_exposure": 11533000,
+      "total_exposure": 11652550
+    },
+    "0.4": {
+      "precision": 0.661754,
+      "recall": 0.182421,
+      "f1": 0.286002,
+      "tp": 2694,
+      "fp": 1377,
+      "fn": 12074,
+      "fpr": 0.004920968,
+      "fp_cost": 68850,
+      "fn_exposure": 12074000,
+      "total_exposure": 12142850
+    },
+    "0.45": {
+      "precision": 0.738276,
+      "recall": 0.157774,
+      "f1": 0.259987,
+      "tp": 2330,
+      "fp": 826,
+      "fn": 12438,
+      "fpr": 0.002951866,
+      "fp_cost": 41300,
+      "fn_exposure": 12438000,
+      "total_exposure": 12479300
+    },
+    "0.5": {
+      "precision": 0.798044,
+      "recall": 0.143689,
+      "f1": 0.24353,
+      "tp": 2122,
+      "fp": 537,
+      "fn": 12646,
+      "fpr": 0.00191907,
+      "fp_cost": 26850,
+      "fn_exposure": 12646000,
+      "total_exposure": 12672850
+    }
+  },
+  "best_threshold_by_total_exposure": {
+    "threshold": 0.1,
+    "total_exposure": 8278500
+  }
+}
