@@ -44,7 +44,7 @@ def insert_risk_decision(
     with get_connection() as connection:
         connection.execute(
             """
-            INSERT OR REPLACE INTO risk_decisions (
+            INSERT INTO risk_decisions (
                 transaction_id,
                 final_risk_score,
                 action,

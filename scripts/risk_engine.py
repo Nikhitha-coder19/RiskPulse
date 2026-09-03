@@ -1,10 +1,18 @@
 import json
+import sys
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from behavioral_adapter import BehavioralAdapter
 from merchant_adapter import MerchantAdapter
 from traditional_adapter import TraditionalAdapter
 from fusion_engine import FusionEngine
 from runtime_state import RiskState
+from ui.database import insert_risk_decision
 
 
 class RiskEngine:
@@ -168,7 +176,29 @@ class RiskEngine:
         result = self.score_transaction(tx)
 
         # --------------------------------------------------------
-        # UPDATE STATE AFTER DECISION
+        # PERSIST DECISION BEFORE STATE UPDATE
+        # --------------------------------------------------------
+
+        fusion_result = result["fusion"]
+
+        insert_risk_decision(
+            transaction_id=tx["transaction_id"],
+            final_risk_score=fusion_result["final_risk_score"],
+            action=fusion_result["action"],
+            traditional_probability=fusion_result[
+                "traditional_probability"
+            ],
+            behavioral_probability=fusion_result[
+                "behavioral_probability"
+            ],
+            merchant_probability=fusion_result[
+                "merchant_probability"
+            ],
+            created_at=tx["timestamp"],
+        )
+
+        # --------------------------------------------------------
+        # UPDATE STATE AFTER DECISION PERSISTENCE
         # --------------------------------------------------------
 
         self.state.update_after_transaction(
