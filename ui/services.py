@@ -200,6 +200,139 @@ def get_transaction(transaction_id):
     )
 
 
+def _get_related_entity_history(entity_type, entity_id):
+    """Return relationship history for one exact entity."""
+
+    relationships = fetch_all(
+        """
+        SELECT
+            related_type,
+            related_id,
+            first_seen,
+            last_seen,
+            count
+        FROM entity_relationships
+        WHERE entity_type = ?
+          AND entity_id = ?
+        ORDER BY related_type ASC, related_id ASC
+        """,
+        (entity_type, entity_id),
+    )
+
+    return {
+        "entity_id": entity_id,
+        "relationships": relationships,
+    }
+
+
+def get_transaction_investigation(transaction_id):
+    """Return the complete read-only investigation payload for a transaction."""
+
+    if (
+        not isinstance(transaction_id, str)
+        or not transaction_id.strip()
+    ):
+        raise ValueError("transaction_id must be a non-empty string")
+
+    transaction_id = transaction_id.strip()
+
+    transaction = fetch_one(
+        """
+        SELECT
+            transaction_id,
+            timestamp,
+            customer_id,
+            merchant_id,
+            device_id,
+            ip_id,
+            shipping_address_id,
+            billing_address_id,
+            amount,
+            is_fraud
+        FROM transactions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if transaction is None:
+        return None
+
+    decision = fetch_one(
+        """
+        SELECT
+            transaction_id,
+            final_risk_score,
+            action,
+            traditional_probability,
+            behavioral_probability,
+            merchant_probability,
+            created_at
+        FROM risk_decisions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    customer_history = fetch_one(
+        """
+        SELECT
+            customer_id,
+            transaction_count,
+            total_amount,
+            max_amount,
+            previous_timestamp,
+            created_at
+        FROM customers
+        WHERE customer_id = ?
+        """,
+        (transaction["customer_id"],),
+    )
+
+    merchant_history = fetch_one(
+        """
+        SELECT
+            merchant_id,
+            transaction_count,
+            total_amount,
+            previous_amount,
+            previous_timestamp,
+            fraud_count,
+            created_at
+        FROM merchants
+        WHERE merchant_id = ?
+        """,
+        (transaction["merchant_id"],),
+    )
+
+    related_entities = {
+        "device": _get_related_entity_history(
+            "device",
+            transaction["device_id"],
+        ),
+        "ip": _get_related_entity_history(
+            "ip",
+            transaction["ip_id"],
+        ),
+        "shipping_address": _get_related_entity_history(
+            "shipping_address",
+            transaction["shipping_address_id"],
+        ),
+        "billing_address": _get_related_entity_history(
+            "billing_address",
+            transaction["billing_address_id"],
+        ),
+    }
+
+    return {
+        "transaction": transaction,
+        "decision": decision,
+        "customer_history": customer_history,
+        "merchant_history": merchant_history,
+        "related_entities": related_entities,
+    }
+
+
 def get_customer(customer_id):
     """Return customer runtime state."""
 
