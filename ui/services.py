@@ -1,4 +1,157 @@
-from .database import fetch_all, fetch_one
+import json
+from datetime import datetime, timezone
+
+from .database import fetch_all, fetch_one, get_connection
+
+
+def _required_audit_string(value, field_name):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            f"{field_name} must be a non-empty string"
+        )
+
+    return value.strip()
+
+
+def _optional_audit_string(value, field_name):
+    if value is None:
+        return None
+
+    return _required_audit_string(value, field_name)
+
+
+def log_audit_event(
+    employee_id,
+    action,
+    transaction_id=None,
+    entity_type=None,
+    entity_id=None,
+    metadata=None,
+    created_at=None,
+):
+    """Insert and return one employee/system audit event."""
+
+    employee_id = _required_audit_string(employee_id, "employee_id")
+    action = _required_audit_string(action, "action")
+    transaction_id = _optional_audit_string(
+        transaction_id,
+        "transaction_id",
+    )
+    entity_type = _optional_audit_string(entity_type, "entity_type")
+    entity_id = _optional_audit_string(entity_id, "entity_id")
+
+    metadata_json = (
+        json.dumps(metadata)
+        if metadata is not None
+        else None
+    )
+
+    if created_at is None:
+        created_at = datetime.now(timezone.utc).isoformat()
+
+    with get_connection() as connection:
+        cursor = connection.execute(
+            """
+            INSERT INTO audit_log (
+                employee_id,
+                action,
+                transaction_id,
+                entity_type,
+                entity_id,
+                metadata,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                employee_id,
+                action,
+                transaction_id,
+                entity_type,
+                entity_id,
+                metadata_json,
+                created_at,
+            ),
+        )
+        audit_id = cursor.lastrowid
+
+        row = connection.execute(
+            """
+            SELECT
+                audit_id,
+                employee_id,
+                action,
+                transaction_id,
+                entity_type,
+                entity_id,
+                metadata,
+                created_at
+            FROM audit_log
+            WHERE audit_id = ?
+            """,
+            (audit_id,),
+        ).fetchone()
+
+        return dict(row)
+
+
+def _validate_audit_limit(limit):
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
+        raise ValueError("limit must be a positive integer")
+
+
+def get_audit_logs(
+    transaction_id=None,
+    employee_id=None,
+    action=None,
+    entity_type=None,
+    entity_id=None,
+    limit=100,
+):
+    """Return the newest matching audit events within a bounded limit."""
+
+    _validate_audit_limit(limit)
+
+    filters = []
+    params = []
+
+    for column, value in (
+        ("transaction_id", transaction_id),
+        ("employee_id", employee_id),
+        ("action", action),
+        ("entity_type", entity_type),
+        ("entity_id", entity_id),
+    ):
+        if value is not None:
+            filters.append(f"{column} = ?")
+            params.append(value)
+
+    where_clause = (
+        "WHERE " + " AND ".join(filters)
+        if filters
+        else ""
+    )
+
+    params.append(limit)
+
+    return fetch_all(
+        f"""
+        SELECT
+            audit_id,
+            employee_id,
+            action,
+            transaction_id,
+            entity_type,
+            entity_id,
+            metadata,
+            created_at
+        FROM audit_log
+        {where_clause}
+        ORDER BY created_at DESC, audit_id DESC
+        LIMIT ?
+        """,
+        params,
+    )
 
 
 def get_dashboard_stats():
