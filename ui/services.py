@@ -1,7 +1,381 @@
 import json
+import sqlite3
 from datetime import datetime, timezone
 
 from .database import fetch_all, fetch_one, get_connection
+
+
+REVIEW_STATUSES = {
+    "OPEN",
+    "IN_PROGRESS",
+    "RESOLVED",
+}
+
+REVIEW_ANALYST_DECISIONS = {
+    "ALLOW",
+    "BLOCK",
+    "ESCALATE",
+}
+
+
+def _review_string(value, field_name):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            f"{field_name} must be a non-empty string"
+        )
+
+    return value.strip()
+
+
+def _review_timestamp(created_at=None):
+    if created_at is not None:
+        return created_at
+
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _review_id(review_id):
+    if (
+        isinstance(review_id, bool)
+        or not isinstance(review_id, int)
+        or review_id < 1
+    ):
+        raise ValueError("review_id must be a positive integer")
+
+    return review_id
+
+
+def _get_review_case(review_id):
+    return fetch_one(
+        """
+        SELECT
+            review_id,
+            transaction_id,
+            status,
+            assigned_employee_id,
+            review_reason,
+            analyst_decision,
+            analyst_comments,
+            created_at,
+            updated_at,
+            resolved_at
+        FROM review_queue
+        WHERE review_id = ?
+        """,
+        (review_id,),
+    )
+
+
+def _validate_review_status(status):
+    if status is not None and status not in REVIEW_STATUSES:
+        raise ValueError(f"Invalid review status: {status}")
+
+
+def _review_queue_filters(status=None, assigned_employee_id=None):
+    _validate_review_status(status)
+
+    if assigned_employee_id is not None:
+        assigned_employee_id = _review_string(
+            assigned_employee_id,
+            "assigned_employee_id",
+        )
+
+    filters = []
+    params = []
+
+    if status is not None:
+        filters.append("status = ?")
+        params.append(status)
+
+    if assigned_employee_id is not None:
+        filters.append("assigned_employee_id = ?")
+        params.append(assigned_employee_id)
+
+    where_clause = (
+        "WHERE " + " AND ".join(filters)
+        if filters
+        else ""
+    )
+
+    return where_clause, params
+
+
+def create_review_case(transaction_id, review_reason, created_at=None):
+    """Create one OPEN review case for a REVIEW risk decision."""
+
+    transaction_id = _review_string(transaction_id, "transaction_id")
+    review_reason = _review_string(review_reason, "review_reason")
+
+    transaction = fetch_one(
+        """
+        SELECT transaction_id
+        FROM transactions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if transaction is None:
+        raise ValueError(
+            f"Cannot create review case: transaction '{transaction_id}' "
+            "does not exist"
+        )
+
+    decision = fetch_one(
+        """
+        SELECT action
+        FROM risk_decisions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if decision is None or decision["action"] != "REVIEW":
+        raise ValueError(
+            f"Cannot create review case: transaction '{transaction_id}' "
+            "does not have a REVIEW decision"
+        )
+
+    timestamp = _review_timestamp(created_at)
+
+    try:
+        with get_connection() as connection:
+            cursor = connection.execute(
+                """
+                INSERT INTO review_queue (
+                    transaction_id,
+                    status,
+                    assigned_employee_id,
+                    review_reason,
+                    analyst_decision,
+                    analyst_comments,
+                    created_at,
+                    updated_at,
+                    resolved_at
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    transaction_id,
+                    "OPEN",
+                    None,
+                    review_reason,
+                    None,
+                    None,
+                    timestamp,
+                    timestamp,
+                    None,
+                ),
+            )
+            review_id = cursor.lastrowid
+    except sqlite3.IntegrityError as error:
+        raise ValueError(
+            f"Review case already exists for transaction '{transaction_id}'"
+        ) from error
+
+    return _get_review_case(review_id)
+
+
+def get_review_queue(
+    status=None,
+    assigned_employee_id=None,
+    page=1,
+    page_size=50,
+):
+    """Return a bounded, newest-first page of review cases."""
+
+    _validate_pagination(page, page_size)
+    where_clause, params = _review_queue_filters(
+        status=status,
+        assigned_employee_id=assigned_employee_id,
+    )
+    params.extend([page_size, (page - 1) * page_size])
+
+    return fetch_all(
+        f"""
+        SELECT
+            review_id,
+            transaction_id,
+            status,
+            assigned_employee_id,
+            review_reason,
+            analyst_decision,
+            analyst_comments,
+            created_at,
+            updated_at,
+            resolved_at
+        FROM review_queue
+        {where_clause}
+        ORDER BY created_at DESC, review_id DESC
+        LIMIT ? OFFSET ?
+        """,
+        params,
+    )
+
+
+def count_review_queue(status=None, assigned_employee_id=None):
+    """Return the count of review cases matching the supplied filters."""
+
+    where_clause, params = _review_queue_filters(
+        status=status,
+        assigned_employee_id=assigned_employee_id,
+    )
+
+    result = fetch_one(
+        f"""
+        SELECT COUNT(*) AS count
+        FROM review_queue
+        {where_clause}
+        """,
+        params,
+    )
+
+    return int(result["count"])
+
+
+def assign_review_case(review_id, employee_id):
+    """Assign an OPEN review case and move it to IN_PROGRESS."""
+
+    review_id = _review_id(review_id)
+    employee_id = _review_string(employee_id, "employee_id")
+    review_case = _get_review_case(review_id)
+
+    if review_case is None:
+        raise ValueError(f"Review case '{review_id}' does not exist")
+
+    if review_case["status"] != "OPEN":
+        raise ValueError(
+            f"Review case '{review_id}' can only be assigned while OPEN"
+        )
+
+    updated_at = _review_timestamp()
+
+    with get_connection() as connection:
+        cursor = connection.execute(
+            """
+            UPDATE review_queue
+            SET assigned_employee_id = ?,
+                status = ?,
+                updated_at = ?
+            WHERE review_id = ?
+              AND status = ?
+            """,
+            (
+                employee_id,
+                "IN_PROGRESS",
+                updated_at,
+                review_id,
+                "OPEN",
+            ),
+        )
+
+        if cursor.rowcount != 1:
+            raise ValueError(
+                f"Review case '{review_id}' could not be assigned because "
+                "its state changed or it is no longer OPEN"
+            )
+
+    updated_case = _get_review_case(review_id)
+
+    log_audit_event(
+        employee_id=employee_id,
+        action="ASSIGN_REVIEW_CASE",
+        transaction_id=updated_case["transaction_id"],
+        entity_type="review_case",
+        entity_id=str(review_id),
+        metadata={
+            "review_id": review_id,
+            "previous_status": "OPEN",
+            "new_status": "IN_PROGRESS",
+        },
+    )
+
+    return updated_case
+
+
+def resolve_review_case(
+    review_id,
+    analyst_decision,
+    analyst_comments=None,
+):
+    """Resolve an IN_PROGRESS review case with an analyst decision."""
+
+    review_id = _review_id(review_id)
+    analyst_decision = _review_string(
+        analyst_decision,
+        "analyst_decision",
+    )
+
+    if analyst_decision not in REVIEW_ANALYST_DECISIONS:
+        raise ValueError(
+            f"Invalid analyst decision: {analyst_decision}"
+        )
+
+    if analyst_comments is not None:
+        analyst_comments = _review_string(
+            analyst_comments,
+            "analyst_comments",
+        )
+
+    review_case = _get_review_case(review_id)
+
+    if review_case is None:
+        raise ValueError(f"Review case '{review_id}' does not exist")
+
+    if review_case["status"] != "IN_PROGRESS":
+        raise ValueError(
+            f"Review case '{review_id}' can only be resolved while "
+            "IN_PROGRESS"
+        )
+
+    timestamp = _review_timestamp()
+
+    with get_connection() as connection:
+        cursor = connection.execute(
+            """
+            UPDATE review_queue
+            SET status = ?,
+                analyst_decision = ?,
+                analyst_comments = ?,
+                updated_at = ?,
+                resolved_at = ?
+            WHERE review_id = ?
+              AND status = ?
+            """,
+            (
+                "RESOLVED",
+                analyst_decision,
+                analyst_comments,
+                timestamp,
+                timestamp,
+                review_id,
+                "IN_PROGRESS",
+            ),
+        )
+
+        if cursor.rowcount != 1:
+            raise ValueError(
+                f"Review case '{review_id}' could not be resolved because "
+                "its state changed or it is no longer IN_PROGRESS"
+            )
+
+    resolved_case = _get_review_case(review_id)
+
+    log_audit_event(
+        employee_id=resolved_case["assigned_employee_id"],
+        action="RESOLVE_REVIEW_CASE",
+        transaction_id=resolved_case["transaction_id"],
+        entity_type="review_case",
+        entity_id=str(review_id),
+        metadata={
+            "review_id": review_id,
+            "previous_status": "IN_PROGRESS",
+            "new_status": "RESOLVED",
+            "analyst_decision": analyst_decision,
+        },
+    )
+
+    return resolved_case
 
 
 CHALLENGE_EVENT_TYPES = {

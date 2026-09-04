@@ -53,6 +53,20 @@ def initialize_operations_schema():
             created_at TEXT NOT NULL
         );
 
+        CREATE TABLE IF NOT EXISTS review_queue (
+            review_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            transaction_id TEXT NOT NULL,
+            status TEXT NOT NULL,
+            assigned_employee_id TEXT,
+            review_reason TEXT NOT NULL,
+            analyst_decision TEXT,
+            analyst_comments TEXT,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL,
+            resolved_at TEXT,
+            UNIQUE(transaction_id)
+        );
+
         CREATE INDEX IF NOT EXISTS idx_risk_decisions_transaction
             ON risk_decisions(transaction_id);
 
@@ -76,6 +90,18 @@ def initialize_operations_schema():
 
         CREATE INDEX IF NOT EXISTS idx_audit_created
             ON audit_log(created_at);
+
+        CREATE INDEX IF NOT EXISTS idx_review_queue_transaction
+            ON review_queue(transaction_id);
+
+        CREATE INDEX IF NOT EXISTS idx_review_queue_status
+            ON review_queue(status);
+
+        CREATE INDEX IF NOT EXISTS idx_review_queue_assignee
+            ON review_queue(assigned_employee_id);
+
+        CREATE INDEX IF NOT EXISTS idx_review_queue_created
+            ON review_queue(created_at);
         """
     )
 
