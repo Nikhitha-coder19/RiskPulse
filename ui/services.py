@@ -4,6 +4,226 @@ from datetime import datetime, timezone
 from .database import fetch_all, fetch_one, get_connection
 
 
+CHALLENGE_EVENT_TYPES = {
+    "CHALLENGE_CREATED",
+    "VERIFICATION_STARTED",
+    "VERIFICATION_COMPLETED",
+    "VERIFICATION_FAILED",
+    "CHALLENGE_EXPIRED",
+    "CHALLENGE_CANCELLED",
+}
+
+
+def _required_challenge_string(value, field_name):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            f"{field_name} must be a non-empty string"
+        )
+
+    return value.strip()
+
+
+def _optional_challenge_string(value, field_name):
+    if value is None:
+        return None
+
+    return _required_challenge_string(value, field_name)
+
+
+def _challenge_timestamp(created_at):
+    if created_at is not None:
+        return created_at
+
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _insert_challenge_event(
+    transaction_id,
+    event_type,
+    outcome=None,
+    notes=None,
+    created_at=None,
+):
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+    event_type = _required_challenge_string(event_type, "event_type")
+    if event_type not in CHALLENGE_EVENT_TYPES:
+        raise ValueError(
+            f"Unsupported challenge event type: {event_type}"
+        )
+    outcome = _optional_challenge_string(outcome, "outcome")
+    notes = _optional_challenge_string(notes, "notes")
+    created_at = _challenge_timestamp(created_at)
+
+    with get_connection() as connection:
+        cursor = connection.execute(
+            """
+            INSERT INTO challenge_events (
+                transaction_id,
+                event_type,
+                outcome,
+                notes,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                transaction_id,
+                event_type,
+                outcome,
+                notes,
+                created_at,
+            ),
+        )
+        challenge_id = cursor.lastrowid
+
+        row = connection.execute(
+            """
+            SELECT
+                challenge_id,
+                transaction_id,
+                event_type,
+                outcome,
+                notes,
+                created_at
+            FROM challenge_events
+            WHERE challenge_id = ?
+            """,
+            (challenge_id,),
+        ).fetchone()
+
+        return dict(row)
+
+
+def create_challenge(transaction_id, created_at=None, notes=None):
+    """Create a challenge lifecycle by recording its initial event."""
+
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+
+    transaction = fetch_one(
+        """
+        SELECT transaction_id
+        FROM transactions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if transaction is None:
+        raise ValueError(
+            f"Cannot create challenge: transaction '{transaction_id}' "
+            "does not exist"
+        )
+
+    decision = fetch_one(
+        """
+        SELECT action
+        FROM risk_decisions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if decision is None or decision["action"] != "CHALLENGE":
+        raise ValueError(
+            f"Cannot create challenge: transaction '{transaction_id}' "
+            "does not have a CHALLENGE decision"
+        )
+
+    return _insert_challenge_event(
+        transaction_id=transaction_id,
+        event_type="CHALLENGE_CREATED",
+        outcome="PENDING",
+        notes=notes,
+        created_at=created_at,
+    )
+
+
+def record_challenge_event(
+    transaction_id,
+    event_type,
+    outcome=None,
+    notes=None,
+    created_at=None,
+):
+    """Record one challenge or verification lifecycle event."""
+
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+    event_type = _required_challenge_string(event_type, "event_type")
+
+    if event_type == "CHALLENGE_CREATED":
+        raise ValueError(
+            "CHALLENGE_CREATED can only be recorded by create_challenge"
+        )
+
+    if event_type not in CHALLENGE_EVENT_TYPES:
+        raise ValueError(
+            f"Unsupported challenge event type: {event_type}"
+        )
+
+    created_event = fetch_one(
+        """
+        SELECT challenge_id
+        FROM challenge_events
+        WHERE transaction_id = ?
+          AND event_type = ?
+        LIMIT 1
+        """,
+        (transaction_id, "CHALLENGE_CREATED"),
+    )
+
+    if created_event is None:
+        raise ValueError(
+            f"Cannot record challenge event: transaction '{transaction_id}' "
+            "has no CHALLENGE_CREATED event"
+        )
+
+    return _insert_challenge_event(
+        transaction_id=transaction_id,
+        event_type=event_type,
+        outcome=outcome,
+        notes=notes,
+        created_at=created_at,
+    )
+
+
+def get_challenge_events(transaction_id, limit=100):
+    """Return bounded challenge events for one transaction."""
+
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
+        raise ValueError("limit must be a positive integer")
+
+    return fetch_all(
+        """
+        SELECT
+            challenge_id,
+            transaction_id,
+            event_type,
+            outcome,
+            notes,
+            created_at
+        FROM challenge_events
+        WHERE transaction_id = ?
+        ORDER BY created_at DESC, challenge_id DESC
+        LIMIT ?
+        """,
+        (transaction_id, limit),
+    )
+
+
 def _required_audit_string(value, field_name):
     if not isinstance(value, str) or not value.strip():
         raise ValueError(
