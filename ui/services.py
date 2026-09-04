@@ -17,6 +17,16 @@ REVIEW_ANALYST_DECISIONS = {
     "ESCALATE",
 }
 
+FEEDBACK_TYPES = {
+    "CONFIRMED_OUTCOME",
+    "ANALYST_NOTE",
+}
+
+CONFIRMED_OUTCOMES = {
+    "LEGITIMATE",
+    "FRAUD",
+}
+
 
 def _review_string(value, field_name):
     if not isinstance(value, str) or not value.strip():
@@ -32,6 +42,252 @@ def _review_timestamp(created_at=None):
         return created_at
 
     return datetime.now(timezone.utc).isoformat()
+
+
+def _feedback_string(value, field_name):
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(
+            f"{field_name} must be a non-empty string"
+        )
+
+    return value.strip()
+
+
+def _feedback_optional_string(value, field_name):
+    if value is None:
+        return None
+
+    return _feedback_string(value, field_name)
+
+
+def _feedback_filters(
+    transaction_id=None,
+    employee_id=None,
+    feedback_type=None,
+    confirmed_outcome=None,
+):
+    values = {
+        "transaction_id": transaction_id,
+        "employee_id": employee_id,
+        "feedback_type": feedback_type,
+        "confirmed_outcome": confirmed_outcome,
+    }
+
+    for field_name, value in values.items():
+        if value is not None:
+            values[field_name] = _feedback_string(value, field_name)
+
+    if (
+        values["feedback_type"] is not None
+        and values["feedback_type"] not in FEEDBACK_TYPES
+    ):
+        raise ValueError(
+            f"Invalid feedback type: {values['feedback_type']}"
+        )
+
+    if (
+        values["confirmed_outcome"] is not None
+        and values["confirmed_outcome"] not in CONFIRMED_OUTCOMES
+    ):
+        raise ValueError(
+            "Invalid confirmed outcome: "
+            f"{values['confirmed_outcome']}"
+        )
+
+    filters = []
+    params = []
+
+    for column, value in values.items():
+        if value is not None:
+            filters.append(f"{column} = ?")
+            params.append(value)
+
+    where_clause = (
+        "WHERE " + " AND ".join(filters)
+        if filters
+        else ""
+    )
+
+    return where_clause, params
+
+
+def record_feedback(
+    transaction_id,
+    employee_id,
+    feedback_type,
+    confirmed_outcome=None,
+    comments=None,
+    created_at=None,
+):
+    """Record validated feedback and audit its creation."""
+
+    transaction_id = _feedback_string(transaction_id, "transaction_id")
+    employee_id = _feedback_string(employee_id, "employee_id")
+    feedback_type = _feedback_string(feedback_type, "feedback_type")
+    comments = _feedback_optional_string(comments, "comments")
+
+    if feedback_type not in FEEDBACK_TYPES:
+        raise ValueError(
+            f"Invalid feedback type: {feedback_type}"
+        )
+
+    if feedback_type == "CONFIRMED_OUTCOME":
+        if confirmed_outcome is None:
+            raise ValueError(
+                "CONFIRMED_OUTCOME feedback requires confirmed_outcome"
+            )
+        confirmed_outcome = _feedback_string(
+            confirmed_outcome,
+            "confirmed_outcome",
+        )
+    elif confirmed_outcome is not None:
+        raise ValueError(
+            "ANALYST_NOTE feedback cannot include confirmed_outcome"
+        )
+
+    if (
+        confirmed_outcome is not None
+        and confirmed_outcome not in CONFIRMED_OUTCOMES
+    ):
+        raise ValueError(
+            f"Invalid confirmed outcome: {confirmed_outcome}"
+        )
+
+    transaction = fetch_one(
+        """
+        SELECT transaction_id
+        FROM transactions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
+    if transaction is None:
+        raise ValueError(
+            f"Cannot record feedback: transaction '{transaction_id}' "
+            "does not exist"
+        )
+
+    timestamp = _review_timestamp(created_at)
+
+    with get_connection() as connection:
+        cursor = connection.execute(
+            """
+            INSERT INTO analyst_feedback (
+                transaction_id,
+                employee_id,
+                feedback_type,
+                confirmed_outcome,
+                comments,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                transaction_id,
+                employee_id,
+                feedback_type,
+                confirmed_outcome,
+                comments,
+                timestamp,
+            ),
+        )
+        feedback_id = cursor.lastrowid
+
+    feedback = fetch_one(
+        """
+        SELECT
+            feedback_id,
+            transaction_id,
+            employee_id,
+            feedback_type,
+            confirmed_outcome,
+            comments,
+            created_at
+        FROM analyst_feedback
+        WHERE feedback_id = ?
+        """,
+        (feedback_id,),
+    )
+
+    log_audit_event(
+        employee_id=employee_id,
+        action="RECORD_FEEDBACK",
+        transaction_id=transaction_id,
+        entity_type="analyst_feedback",
+        entity_id=str(feedback_id),
+        metadata={
+            "feedback_type": feedback_type,
+            "confirmed_outcome": confirmed_outcome,
+        },
+    )
+
+    return feedback
+
+
+def get_feedback(
+    transaction_id=None,
+    employee_id=None,
+    feedback_type=None,
+    confirmed_outcome=None,
+    page=1,
+    page_size=50,
+):
+    """Return a bounded, newest-first page of feedback records."""
+
+    _validate_pagination(page, page_size)
+    where_clause, params = _feedback_filters(
+        transaction_id=transaction_id,
+        employee_id=employee_id,
+        feedback_type=feedback_type,
+        confirmed_outcome=confirmed_outcome,
+    )
+    params.extend([page_size, (page - 1) * page_size])
+
+    return fetch_all(
+        f"""
+        SELECT
+            feedback_id,
+            transaction_id,
+            employee_id,
+            feedback_type,
+            confirmed_outcome,
+            comments,
+            created_at
+        FROM analyst_feedback
+        {where_clause}
+        ORDER BY created_at DESC, feedback_id DESC
+        LIMIT ? OFFSET ?
+        """,
+        params,
+    )
+
+
+def count_feedback(
+    transaction_id=None,
+    employee_id=None,
+    feedback_type=None,
+    confirmed_outcome=None,
+):
+    """Return the count of feedback records matching the filters."""
+
+    where_clause, params = _feedback_filters(
+        transaction_id=transaction_id,
+        employee_id=employee_id,
+        feedback_type=feedback_type,
+        confirmed_outcome=confirmed_outcome,
+    )
+
+    result = fetch_one(
+        f"""
+        SELECT COUNT(*) AS count
+        FROM analyst_feedback
+        {where_clause}
+        """,
+        params,
+    )
+
+    return int(result["count"])
 
 
 def _review_id(review_id):
