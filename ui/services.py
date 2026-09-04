@@ -290,6 +290,93 @@ def count_feedback(
     return int(result["count"])
 
 
+def get_customer_protection(
+    transaction_id,
+    merchant_warning_threshold=0.75,
+):
+    """Return safe customer-facing protection guidance for a transaction."""
+
+    transaction_id = _feedback_string(transaction_id, "transaction_id")
+
+    investigation = get_transaction_investigation(transaction_id)
+
+    if investigation is None:
+        raise ValueError(
+            f"Cannot get customer protection: transaction "
+            f"'{transaction_id}' does not exist"
+        )
+
+    decision = investigation["decision"]
+
+    if decision is None:
+        raise ValueError(
+            f"Cannot get customer protection: transaction "
+            f"'{transaction_id}' has no persisted RiskPulse decision"
+        )
+
+    merchant_probability = float(decision["merchant_probability"])
+    warning_present = (
+        merchant_probability >= merchant_warning_threshold
+    )
+
+    warning_message = (
+        "This merchant has unusual risk indicators. Proceed only if "
+        "you trust this merchant."
+        if warning_present
+        else None
+    )
+
+    action_responses = {
+        "ALLOW": (
+            "PROCEED",
+            "Your transaction can proceed.",
+        ),
+        "CHALLENGE": (
+            "VERIFY",
+            "Additional verification is required to continue.",
+        ),
+        "BLOCK": (
+            "STOP",
+            "This transaction could not be completed.",
+        ),
+        "REVIEW": (
+            "REVIEW",
+            "This transaction requires additional review before it can continue.",
+        ),
+    }
+
+    try:
+        customer_action, message = action_responses[decision["action"]]
+    except KeyError as error:
+        raise ValueError(
+            f"Unsupported persisted RiskPulse action: {decision['action']}"
+        ) from error
+
+    response = {
+        "transaction_id": transaction_id,
+        "customer_action": customer_action,
+        "message": message,
+        "warning_present": warning_present,
+        "warning_message": warning_message,
+        "warning_options": (
+            ["CONTINUE", "CANCEL"]
+            if warning_present
+            else []
+        ),
+    }
+
+    if decision["action"] == "CHALLENGE":
+        response["verification_required"] = True
+        response["verification_completed"] = any(
+            event["event_type"] == "VERIFICATION_COMPLETED"
+            for event in get_challenge_events(transaction_id)
+        )
+    else:
+        response["verification_required"] = False
+
+    return response
+
+
 def _review_id(review_id):
     if (
         isinstance(review_id, bool)
