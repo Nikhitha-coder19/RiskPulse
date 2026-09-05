@@ -13,6 +13,7 @@ from traditional_adapter import TraditionalAdapter
 from fusion_engine import FusionEngine
 from runtime_state import RiskState
 from ui.database import insert_risk_decision
+from ui.services import ensure_challenge_for_transaction
 
 
 class RiskEngine:
@@ -196,6 +197,12 @@ class RiskEngine:
             ],
             created_at=tx["timestamp"],
         )
+
+        if fusion_result["action"] == "CHALLENGE":
+            ensure_challenge_for_transaction(
+                tx["transaction_id"],
+                created_at=tx["timestamp"],
+            )
 
         # --------------------------------------------------------
         # UPDATE STATE AFTER DECISION PERSISTENCE

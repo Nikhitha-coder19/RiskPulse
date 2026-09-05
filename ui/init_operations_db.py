@@ -105,6 +105,17 @@ def initialize_operations_schema():
         """
     )
 
+    columns = {
+        row[1]
+        for row in connection.execute(
+            "PRAGMA table_info(analyst_feedback)"
+        ).fetchall()
+    }
+    if "recommended_action" not in columns:
+        connection.execute(
+            "ALTER TABLE analyst_feedback ADD COLUMN recommended_action TEXT"
+        )
+
     connection.commit()
     connection.close()
 

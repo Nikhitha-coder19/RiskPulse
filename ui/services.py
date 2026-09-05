@@ -2,10 +2,12 @@ import json
 import sqlite3
 from datetime import datetime, timezone
 
+from .auth import is_known_employee
 from .database import fetch_all, fetch_one, get_connection
 
 
 REVIEW_STATUSES = {
+    "ACTIVE",
     "OPEN",
     "IN_PROGRESS",
     "RESOLVED",
@@ -25,6 +27,13 @@ FEEDBACK_TYPES = {
 CONFIRMED_OUTCOMES = {
     "LEGITIMATE",
     "FRAUD",
+}
+
+RECOMMENDED_ACTIONS = {
+    "ALLOW",
+    "REVIEW",
+    "CHALLENGE",
+    "BLOCK",
 }
 
 
@@ -65,12 +74,14 @@ def _feedback_filters(
     employee_id=None,
     feedback_type=None,
     confirmed_outcome=None,
+    recommended_action=None,
 ):
     values = {
         "transaction_id": transaction_id,
         "employee_id": employee_id,
         "feedback_type": feedback_type,
         "confirmed_outcome": confirmed_outcome,
+        "recommended_action": recommended_action,
     }
 
     for field_name, value in values.items():
@@ -94,6 +105,15 @@ def _feedback_filters(
             f"{values['confirmed_outcome']}"
         )
 
+    if (
+        values["recommended_action"] is not None
+        and values["recommended_action"] not in RECOMMENDED_ACTIONS
+    ):
+        raise ValueError(
+            "Invalid recommended action: "
+            f"{values['recommended_action']}"
+        )
+
     filters = []
     params = []
 
@@ -114,43 +134,71 @@ def _feedback_filters(
 def record_feedback(
     transaction_id,
     employee_id,
-    feedback_type,
     confirmed_outcome=None,
+    recommended_action=None,
     comments=None,
     created_at=None,
+    feedback_type=None,
 ):
     """Record validated feedback and audit its creation."""
 
     transaction_id = _feedback_string(transaction_id, "transaction_id")
     employee_id = _feedback_string(employee_id, "employee_id")
-    feedback_type = _feedback_string(feedback_type, "feedback_type")
-    comments = _feedback_optional_string(comments, "comments")
+    if not is_known_employee(employee_id):
+        raise ValueError(f"Unknown employee identity: {employee_id}")
 
-    if feedback_type not in FEEDBACK_TYPES:
+    comments = _feedback_optional_string(comments, "comments")
+    if (
+        feedback_type is None
+        and confirmed_outcome in FEEDBACK_TYPES
+    ):
+        feedback_type = confirmed_outcome
+        confirmed_outcome = recommended_action
+        recommended_action = None
+
+    confirmed_outcome = _feedback_optional_string(
+        confirmed_outcome,
+        "confirmed_outcome",
+    )
+    recommended_action = _feedback_optional_string(
+        recommended_action,
+        "recommended_action",
+    )
+
+    if not any((confirmed_outcome, recommended_action, comments)):
         raise ValueError(
-            f"Invalid feedback type: {feedback_type}"
+            "Feedback requires an actual outcome, recommended action, or comments"
         )
 
-    if feedback_type == "CONFIRMED_OUTCOME":
-        if confirmed_outcome is None:
+    if feedback_type is not None:
+        feedback_type = _feedback_string(feedback_type, "feedback_type")
+        if feedback_type not in FEEDBACK_TYPES:
+            raise ValueError(f"Invalid feedback type: {feedback_type}")
+        if feedback_type == "CONFIRMED_OUTCOME" and confirmed_outcome is None:
             raise ValueError(
                 "CONFIRMED_OUTCOME feedback requires confirmed_outcome"
             )
-        confirmed_outcome = _feedback_string(
-            confirmed_outcome,
-            "confirmed_outcome",
-        )
-    elif confirmed_outcome is not None:
-        raise ValueError(
-            "ANALYST_NOTE feedback cannot include confirmed_outcome"
+        if feedback_type == "ANALYST_NOTE" and confirmed_outcome is not None:
+            raise ValueError(
+                "ANALYST_NOTE feedback cannot include confirmed_outcome"
+            )
+    else:
+        feedback_type = (
+            "CONFIRMED_OUTCOME"
+            if confirmed_outcome is not None
+            else "ANALYST_NOTE"
         )
 
-    if (
-        confirmed_outcome is not None
-        and confirmed_outcome not in CONFIRMED_OUTCOMES
-    ):
+    if confirmed_outcome is not None and confirmed_outcome not in CONFIRMED_OUTCOMES:
         raise ValueError(
             f"Invalid confirmed outcome: {confirmed_outcome}"
+        )
+    if (
+        recommended_action is not None
+        and recommended_action not in RECOMMENDED_ACTIONS
+    ):
+        raise ValueError(
+            f"Invalid recommended action: {recommended_action}"
         )
 
     transaction = fetch_one(
@@ -178,16 +226,18 @@ def record_feedback(
                 employee_id,
                 feedback_type,
                 confirmed_outcome,
+                recommended_action,
                 comments,
                 created_at
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 transaction_id,
                 employee_id,
                 feedback_type,
                 confirmed_outcome,
+                recommended_action,
                 comments,
                 timestamp,
             ),
@@ -202,6 +252,7 @@ def record_feedback(
             employee_id,
             feedback_type,
             confirmed_outcome,
+            recommended_action,
             comments,
             created_at
         FROM analyst_feedback
@@ -219,6 +270,7 @@ def record_feedback(
         metadata={
             "feedback_type": feedback_type,
             "confirmed_outcome": confirmed_outcome,
+            "recommended_action": recommended_action,
         },
     )
 
@@ -230,6 +282,7 @@ def get_feedback(
     employee_id=None,
     feedback_type=None,
     confirmed_outcome=None,
+    recommended_action=None,
     page=1,
     page_size=50,
 ):
@@ -241,6 +294,7 @@ def get_feedback(
         employee_id=employee_id,
         feedback_type=feedback_type,
         confirmed_outcome=confirmed_outcome,
+        recommended_action=recommended_action,
     )
     params.extend([page_size, (page - 1) * page_size])
 
@@ -252,6 +306,7 @@ def get_feedback(
             employee_id,
             feedback_type,
             confirmed_outcome,
+            recommended_action,
             comments,
             created_at
         FROM analyst_feedback
@@ -268,6 +323,7 @@ def count_feedback(
     employee_id=None,
     feedback_type=None,
     confirmed_outcome=None,
+    recommended_action=None,
 ):
     """Return the count of feedback records matching the filters."""
 
@@ -276,6 +332,7 @@ def count_feedback(
         employee_id=employee_id,
         feedback_type=feedback_type,
         confirmed_outcome=confirmed_outcome,
+        recommended_action=recommended_action,
     )
 
     result = fetch_one(
@@ -426,7 +483,10 @@ def _review_queue_filters(status=None, assigned_employee_id=None):
     filters = []
     params = []
 
-    if status is not None:
+    if status == "ACTIVE":
+        filters.append("status IN (?, ?)")
+        params.extend(["OPEN", "IN_PROGRESS"])
+    elif status is not None:
         filters.append("status = ?")
         params.append(status)
 
@@ -581,6 +641,8 @@ def assign_review_case(review_id, employee_id):
 
     review_id = _review_id(review_id)
     employee_id = _review_string(employee_id, "employee_id")
+    if not is_known_employee(employee_id):
+        raise ValueError(f"Unknown employee identity: {employee_id}")
     review_case = _get_review_case(review_id)
 
     if review_case is None:
@@ -638,12 +700,16 @@ def assign_review_case(review_id, employee_id):
 
 def resolve_review_case(
     review_id,
+    employee_id,
     analyst_decision,
     analyst_comments=None,
 ):
-    """Resolve an IN_PROGRESS review case with an analyst decision."""
+    """Resolve a case only when the authenticated employee owns it."""
 
     review_id = _review_id(review_id)
+    employee_id = _review_string(employee_id, "employee_id")
+    if not is_known_employee(employee_id):
+        raise ValueError(f"Unknown employee identity: {employee_id}")
     analyst_decision = _review_string(
         analyst_decision,
         "analyst_decision",
@@ -669,6 +735,11 @@ def resolve_review_case(
         raise ValueError(
             f"Review case '{review_id}' can only be resolved while "
             "IN_PROGRESS"
+        )
+
+    if review_case["assigned_employee_id"] != employee_id:
+        raise ValueError(
+            f"Review case '{review_id}' is assigned to another employee"
         )
 
     timestamp = _review_timestamp()
@@ -705,7 +776,7 @@ def resolve_review_case(
     resolved_case = _get_review_case(review_id)
 
     log_audit_event(
-        employee_id=resolved_case["assigned_employee_id"],
+        employee_id=employee_id,
         action="RESOLVE_REVIEW_CASE",
         transaction_id=resolved_case["transaction_id"],
         entity_type="review_case",
@@ -814,6 +885,22 @@ def _insert_challenge_event(
         return dict(row)
 
 
+def _challenge_state(transaction_id):
+    events = fetch_all(
+        """
+        SELECT event_type
+        FROM challenge_events
+        WHERE transaction_id = ?
+        ORDER BY created_at DESC, challenge_id DESC
+        """,
+        (transaction_id,),
+    )
+    if not events:
+        return None
+
+    return events[0]["event_type"]
+
+
 def create_challenge(transaction_id, created_at=None, notes=None):
     """Create a challenge lifecycle by recording its initial event."""
 
@@ -821,21 +908,6 @@ def create_challenge(transaction_id, created_at=None, notes=None):
         transaction_id,
         "transaction_id",
     )
-
-    transaction = fetch_one(
-        """
-        SELECT transaction_id
-        FROM transactions
-        WHERE transaction_id = ?
-        """,
-        (transaction_id,),
-    )
-
-    if transaction is None:
-        raise ValueError(
-            f"Cannot create challenge: transaction '{transaction_id}' "
-            "does not exist"
-        )
 
     decision = fetch_one(
         """
@@ -852,11 +924,45 @@ def create_challenge(transaction_id, created_at=None, notes=None):
             "does not have a CHALLENGE decision"
         )
 
+    if _challenge_state(transaction_id) is not None:
+        raise ValueError(
+            f"Challenge already exists for transaction '{transaction_id}'"
+        )
+
     return _insert_challenge_event(
         transaction_id=transaction_id,
         event_type="CHALLENGE_CREATED",
         outcome="PENDING",
         notes=notes,
+        created_at=created_at,
+    )
+
+
+def ensure_challenge_for_transaction(transaction_id, created_at=None):
+    """Create the challenge representation for a persisted CHALLENGE action."""
+
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+
+    decision = fetch_one(
+        """
+        SELECT action
+        FROM risk_decisions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+    if decision is None or decision["action"] != "CHALLENGE":
+        return None
+
+    challenge = get_challenge_status(transaction_id)
+    if challenge is not None:
+        return challenge
+
+    return create_challenge(
+        transaction_id,
         created_at=created_at,
     )
 
@@ -903,6 +1009,18 @@ def record_challenge_event(
             "has no CHALLENGE_CREATED event"
         )
 
+    current_state = _challenge_state(transaction_id)
+    allowed_events = {
+        "CHALLENGE_CREATED": {"VERIFICATION_STARTED", "CHALLENGE_EXPIRED", "CHALLENGE_CANCELLED"},
+        "VERIFICATION_STARTED": {"VERIFICATION_COMPLETED", "VERIFICATION_FAILED", "CHALLENGE_EXPIRED", "CHALLENGE_CANCELLED"},
+        "VERIFICATION_FAILED": {"VERIFICATION_STARTED", "CHALLENGE_EXPIRED", "CHALLENGE_CANCELLED"},
+    }
+    if event_type not in allowed_events.get(current_state, set()):
+        raise ValueError(
+            f"Cannot record challenge event '{event_type}' after "
+            f"'{current_state}'"
+        )
+
     return _insert_challenge_event(
         transaction_id=transaction_id,
         event_type=event_type,
@@ -939,6 +1057,100 @@ def get_challenge_events(transaction_id, limit=100):
         """,
         (transaction_id, limit),
     )
+
+
+def get_challenge_status(transaction_id):
+    """Return the current challenge lifecycle state and event history."""
+
+    events = get_challenge_events(transaction_id)
+    if not events:
+        return None
+
+    return {
+        "status": events[0]["event_type"],
+        "created_at": next(
+            event["created_at"]
+            for event in reversed(events)
+            if event["event_type"] == "CHALLENGE_CREATED"
+        ),
+        "events": events,
+    }
+
+
+def get_challenge_monitoring():
+    """Return one operational row for each automatically created challenge."""
+
+    created_events = fetch_all(
+        """
+        SELECT challenge_id, transaction_id, created_at
+        FROM challenge_events
+        WHERE event_type = 'CHALLENGE_CREATED'
+        ORDER BY created_at DESC, challenge_id DESC
+        """
+    )
+
+    rows = []
+    for created_event in created_events:
+        status = get_challenge_status(created_event["transaction_id"])
+        latest_event = status["events"][0]
+        rows.append(
+            {
+                "challenge_id": created_event["challenge_id"],
+                "transaction_id": created_event["transaction_id"],
+                "status": status["status"],
+                "created_at": created_event["created_at"],
+                "outcome": latest_event["outcome"],
+                "last_event": latest_event["event_type"],
+            }
+        )
+
+    return rows
+
+
+def get_challenge_details(transaction_id):
+    """Return the read-only challenge monitoring payload for a transaction."""
+
+    transaction_id = _required_challenge_string(
+        transaction_id,
+        "transaction_id",
+    )
+    challenge = get_challenge_status(transaction_id)
+    if challenge is None:
+        return None
+
+    decision = fetch_one(
+        """
+        SELECT final_risk_score, action
+        FROM risk_decisions
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+    if decision is None or decision["action"] != "CHALLENGE":
+        return None
+
+    latest_event = challenge["events"][0]
+    return {
+        "challenge_id": next(
+            event["challenge_id"]
+            for event in challenge["events"]
+            if event["event_type"] == "CHALLENGE_CREATED"
+        ),
+        "transaction_id": transaction_id,
+        "status": challenge["status"],
+        "created_at": challenge["created_at"],
+        "outcome": latest_event["outcome"],
+        "events": list(reversed(challenge["events"])),
+        "reason": (
+            "RiskPulse requested additional customer verification because "
+            "the transaction's combined risk signals required a stronger "
+            "identity check."
+        ),
+        "verification_requirement": (
+            "The customer must complete additional verification through the "
+            "external customer-facing flow. This console monitors the outcome."
+        ),
+    }
 
 
 def _required_audit_string(value, field_name):
@@ -1107,9 +1319,25 @@ def get_dashboard_stats():
         """
     )
 
+    review_stats = fetch_one(
+        """
+        SELECT
+            SUM(CASE WHEN status = 'OPEN' THEN 1 ELSE 0 END)
+                AS open_review_cases,
+            SUM(CASE WHEN status = 'IN_PROGRESS' THEN 1 ELSE 0 END)
+                AS in_progress_review_cases,
+            SUM(CASE WHEN status = 'RESOLVED' THEN 1 ELSE 0 END)
+                AS resolved_review_cases
+        FROM review_queue
+        """
+    )
+
     return {
         key: int(value or 0)
         for key, value in stats.items()
+    } | {
+        key: int(value or 0)
+        for key, value in review_stats.items()
     }
 
 
@@ -1364,6 +1592,25 @@ def get_transaction_investigation(transaction_id):
         (transaction_id,),
     )
 
+    review_case = fetch_one(
+        """
+        SELECT
+            review_id,
+            transaction_id,
+            status,
+            assigned_employee_id,
+            review_reason,
+            analyst_decision,
+            analyst_comments,
+            created_at,
+            updated_at,
+            resolved_at
+        FROM review_queue
+        WHERE transaction_id = ?
+        """,
+        (transaction_id,),
+    )
+
     customer_history = fetch_one(
         """
         SELECT
@@ -1417,6 +1664,9 @@ def get_transaction_investigation(transaction_id):
     return {
         "transaction": transaction,
         "decision": decision,
+        "review_case": review_case,
+        "challenge": get_challenge_status(transaction_id),
+        "feedback_count": count_feedback(transaction_id=transaction_id),
         "customer_history": customer_history,
         "merchant_history": merchant_history,
         "related_entities": related_entities,

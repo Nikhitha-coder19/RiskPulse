@@ -44,6 +44,22 @@ def cleanup():
     try:
         conn.execute(
             """
+            DELETE FROM challenge_events
+            WHERE transaction_id IN (?, ?)
+            """,
+            (TRANSACTION_1, TRANSACTION_2),
+        )
+
+        conn.execute(
+            """
+            DELETE FROM risk_decisions
+            WHERE transaction_id IN (?, ?)
+            """,
+            (TRANSACTION_1, TRANSACTION_2),
+        )
+
+        conn.execute(
+            """
             DELETE FROM transactions
             WHERE transaction_id IN (?, ?)
             """,
@@ -76,6 +92,88 @@ def cleanup():
         )
 
         conn.commit()
+
+    finally:
+        conn.close()
+
+
+def assert_cleanup_complete():
+    conn = sqlite3.connect("../runtime/riskpulse_state.db")
+
+    try:
+        remaining_transactions = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM transactions
+            WHERE transaction_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%",),
+        ).fetchone()[0]
+
+        remaining_decisions = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM risk_decisions
+            WHERE transaction_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%",),
+        ).fetchone()[0]
+
+        remaining_challenges = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM challenge_events
+            WHERE transaction_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%",),
+        ).fetchone()[0]
+
+        remaining_customers = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM customers
+            WHERE customer_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%",),
+        ).fetchone()[0]
+
+        remaining_merchants = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM merchants
+            WHERE merchant_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%",),
+        ).fetchone()[0]
+
+        remaining_relationships = conn.execute(
+            """
+            SELECT COUNT(*)
+            FROM entity_relationships
+            WHERE entity_id LIKE ?
+               OR related_id LIKE ?
+            """,
+            (f"{TEST_PREFIX}%", f"{TEST_PREFIX}%"),
+        ).fetchone()[0]
+
+        assert remaining_transactions == 0, (
+            "Integration-test transactions were not cleaned up."
+        )
+        assert remaining_decisions == 0, (
+            "Integration-test risk decisions were not cleaned up."
+        )
+        assert remaining_challenges == 0, (
+            "Integration-test challenge events were not cleaned up."
+        )
+        assert remaining_customers == 0, (
+            "Integration-test customers were not cleaned up."
+        )
+        assert remaining_merchants == 0, (
+            "Integration-test merchants were not cleaned up."
+        )
+        assert remaining_relationships == 0, (
+            "Integration-test relationships were not cleaned up."
+        )
 
     finally:
         conn.close()
@@ -333,6 +431,7 @@ def main():
 
     finally:
         cleanup()
+        assert_cleanup_complete()
 
 
 if __name__ == "__main__":
