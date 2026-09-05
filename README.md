@@ -1,5 +1,15 @@
 # RiskPulse
 
+## 📌 Availability Note
+
+I understand that the Razorpay AI Builder Internship is intended to be a full-time, in-person opportunity in Bangalore starting in September 2026.
+
+Due to my university's academic requirements, I am unable to begin a full-time internship before late November/early December 2026. I would therefore be sincerely grateful if my project could still be evaluated based on the work demonstrated in this repository rather than being excluded solely because of my current joining-date constraint.
+
+If I am shortlisted, I will make every reasonable effort to seek an exception from my university for an earlier joining date. If an earlier release is not possible, I can commit to joining from late November/early December 2026, when my university permits full-time internships.
+
+I completely understand if the September start is a firm requirement. I simply wanted to communicate my situation transparently and respectfully request that the project be considered on its technical merit before a decision is made based on availability.
+
 ## Overview
 
 RiskPulse is a multi-layer AI risk decisioning and operations system designed to help merchants reduce losses from fraudulent transactions, coordinated behavioral abuse, and merchant-level risk.
@@ -197,7 +207,7 @@ Feedback does not overwrite the original AI decision, review decision, transacti
 
 ## Customer Protection
 
-RiskPulse translates internal risk decisions into high-level protection states where appropriate:
+RiskPulse translates internal risk decisions into high-level protection states where appropriate. Merchant protection remains the primary objective of RiskPulse while these protection states also help prevent legitimate customers from proceeding through risky or potentially harmful transactions.
 
 | Internal action | Protection state |
 |---|---|
@@ -206,7 +216,7 @@ RiskPulse translates internal risk decisions into high-level protection states w
 | `CHALLENGE` | `VERIFY` |
 | `BLOCK` | `STOP` |
 
-Customer-facing protection states should not expose internal model names, fusion weights, thresholds, raw probabilities, or internal reasoning. Merchant-risk warning signals may also be surfaced at an appropriate high level.
+Customer/Merchant-facing protection states should not expose internal model names, fusion weights, thresholds, raw probabilities, or internal reasoning. Merchant-risk warning signals may also be surfaced at an appropriate high level.
 
 ## Auditability
 
@@ -243,6 +253,19 @@ streamlit run ui/app.py
 
 The application uses the local database at `runtime/riskpulse_state.db`. This database is generated local state and is not part of the public repository.
 
+### Demo Access
+
+RiskPulse includes preconfigured buildathon-only employee accounts for evaluating the internal operations console.
+
+| Employee            | Role       | Password            |
+| ------------------- | ---------- | ------------------- |
+| `analyst.alex`      | Analyst    | `riskpulse-alex-2026`  |
+| `analyst.priya`     | Analyst    | `riskpulse-priya-2026`  |
+| `supervisor.morgan` | Supervisor | `riskpulse-morgan-2026` |
+
+These credentials are for this RiskPulse prototype only. They do not provide access to any external systems or real customer or merchant accounts.
+
+
 ## Model Provisioning
 
 The model binaries are intentionally not stored in normal Git history because of their size. The repository contains:
@@ -250,8 +273,7 @@ The model binaries are intentionally not stored in normal Git history because of
 - `model/model_manifest.json`
 - `scripts/provision_models.py`
 
-The provisioning script uses the expected future GitHub Release convention. The Release does not exist yet, so this README does not publish a live asset URL.
-
+The provisioning script downloads the required model artifacts from the public GitHub Release v1.0.0 and verifies each artifact using its expected file size and SHA-256 checksum before installing it locally.
 Run the default provisioning command:
 
 ```powershell
@@ -284,7 +306,7 @@ Provisioning:
 - Does not download datasets
 - Does not download runtime database state
 
-Expected future Release assets:
+Release assets:
 
 ```text
 RiskPulse-random_forest.pkl
@@ -381,7 +403,7 @@ Not stored in normal Git:
 - Credentials and secrets
 - Caches and virtual environments
 
-The model binaries are obtained through the future GitHub Release provisioning process.
+The model binaries are obtained through the public GitHub Release `v1.0.0` using `scripts/provision_models.py`. The repository stores the model metadata and manifest, while the large trained model binaries remain release assets rather than Git-tracked files.
 
 ## Limitations / Prototype Notes
 
