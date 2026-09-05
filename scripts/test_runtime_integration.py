@@ -1,8 +1,13 @@
 import sqlite3
 import uuid
+from pathlib import Path
 
 from risk_engine import RiskEngine
 
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DB_PATH = PROJECT_ROOT / "runtime" / "riskpulse_state.db"
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 TEST_PREFIX = f"runtime_integration_{uuid.uuid4().hex[:8]}"
 
@@ -39,7 +44,7 @@ def make_transaction(transaction_id, timestamp):
 
 
 def cleanup():
-    conn = sqlite3.connect("../runtime/riskpulse_state.db")
+    conn = sqlite3.connect(DB_PATH)
 
     try:
         conn.execute(
@@ -98,7 +103,7 @@ def cleanup():
 
 
 def assert_cleanup_complete():
-    conn = sqlite3.connect("../runtime/riskpulse_state.db")
+    conn = sqlite3.connect(DB_PATH)
 
     try:
         remaining_transactions = conn.execute(
@@ -180,7 +185,7 @@ def assert_cleanup_complete():
 
 
 def assert_transaction_exists(transaction_id):
-    conn = sqlite3.connect("../runtime/riskpulse_state.db")
+    conn = sqlite3.connect(DB_PATH)
 
     try:
         row = conn.execute(
@@ -201,7 +206,7 @@ def assert_transaction_exists(transaction_id):
 
 
 def get_customer_count():
-    conn = sqlite3.connect("../runtime/riskpulse_state.db")
+    conn = sqlite3.connect(DB_PATH)
 
     try:
         row = conn.execute(
@@ -381,7 +386,7 @@ def main():
         # ---------------------------------------------------------
         print("\n[4] Ground-truth safety verification")
 
-        conn = sqlite3.connect("../runtime/riskpulse_state.db")
+        conn = sqlite3.connect(DB_PATH)
 
         try:
             fraud_rows = conn.execute(

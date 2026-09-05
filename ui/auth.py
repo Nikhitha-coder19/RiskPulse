@@ -3,15 +3,20 @@ import hmac
 import base64
 import json
 import os
+import secrets
 
 
 AUTHENTICATED_EMPLOYEE_KEY = "authenticated_employee_id"
 _ITERATIONS = 120000
 _TOKEN_QUERY_KEY = "rp_session"
-_TOKEN_SECRET = os.environ.get(
-    "RISKPULSE_PROTOTYPE_SESSION_SECRET",
-    "riskpulse-buildathon-prototype-session-secret",
-).encode("utf-8")
+_configured_token_secret = os.environ.get(
+    "RISKPULSE_PROTOTYPE_SESSION_SECRET"
+)
+_TOKEN_SECRET = (
+    _configured_token_secret.encode("utf-8")
+    if _configured_token_secret
+    else secrets.token_bytes(32)
+)
 
 # Replace this directory with enterprise identity integration later.
 _EMPLOYEE_DIRECTORY = {

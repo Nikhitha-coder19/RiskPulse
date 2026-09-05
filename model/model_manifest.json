@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "repository": "Nikhitha-coder19/RiskPulse",
+  "release_tag": "v1.0.0",
+  "artifacts": [
+    {
+      "filename": "random_forest.pkl",
+      "asset_name": "RiskPulse-random_forest.pkl",
+      "sha256": "1B3B73478C17911076A6B63AF7431C89467C20FDFAD89C911214E2996DD7FF5F",
+      "size": 1231321577
+    },
+    {
+      "filename": "behavioral_random_forest.pkl",
+      "asset_name": "RiskPulse-behavioral_random_forest.pkl",
+      "sha256": "3BADFD0257236DE7E54E3C60CFA74AFBFB608DA4AE2C3EF9EAB72085617C03A4",
+      "size": 380103033
+    },
+    {
+      "filename": "behavioral_imputer.pkl",
+      "asset_name": "RiskPulse-behavioral_imputer.pkl",
+      "sha256": "0DF78203B9FA98E701AEC4127E8485580DA3D7EF9F056AF4FFEA110CDD588B37",
+      "size": 1815
+    },
+    {
+      "filename": "merchant_logistic_regression.pkl",
+      "asset_name": "RiskPulse-merchant_logistic_regression.pkl",
+      "sha256": "D48D85E0021EB83AF0A996A76CB8FED1E637EE432F807EE8F822859CBC35328E",
+      "size": 1023
+    },
+    {
+      "filename": "merchant_imputer.pkl",
+      "asset_name": "RiskPulse-merchant_imputer.pkl",
+      "sha256": "A987921A3966F60BEF3DE0A5FFFBEC87C37AE3EA75CEB786388C4DE6AECD32F8",
+      "size": 1439
+    }
+  ]
+}
