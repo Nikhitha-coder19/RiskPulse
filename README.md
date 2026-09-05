@@ -233,7 +233,7 @@ RiskPulse includes prototype employee authentication appropriate for the demonst
 - 120,000 PBKDF2 iterations
 - Configurable session-token secret through `RISKPULSE_PROTOTYPE_SESSION_SECRET`
 
-This is prototype authentication, not a claim of production-grade security. No passwords, session secrets, tokens, or private credentials are published.
+This is prototype authentication, not a claim of production-grade security. The repository publishes only the buildathon-only demo credentials required to evaluate the prototype; session secrets, tokens, and other private credentials are not published.
 
 ## Setup
 
@@ -342,16 +342,6 @@ To remove only the demo records created by the seed:
 ```powershell
 python scripts/seed_demo_data.py cleanup
 ```
-
-The prototype includes these demo employee usernames:
-
-```text
-analyst.alex
-analyst.priya
-supervisor.morgan
-```
-
-Passwords are intentionally not published in this repository. Demo credentials should be supplied separately when needed.
 
 ## Repository Structure
 
